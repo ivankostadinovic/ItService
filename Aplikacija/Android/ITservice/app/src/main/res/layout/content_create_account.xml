@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.app.itservice.CreateAccountActivity"
+    tools:showIn="@layout/activity_create_account">
+
+    <TextView
+        android:id="@+id/txtIme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editIme"
+        android:layout_alignBottom="@+id/editIme"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="57dp"
+        android:layout_marginStart="57dp"
+        android:text="Ime:" />
+
+    <TextView
+        android:id="@+id/txtPrezime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editPrezime"
+        android:layout_alignBottom="@+id/editPrezime"
+        android:layout_alignLeft="@+id/txtIme"
+        android:layout_alignStart="@+id/txtIme"
+        android:text="Prezime:" />
+
+    <TextView
+        android:id="@+id/txtUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editUsername"
+        android:layout_alignBottom="@+id/editUsername"
+        android:layout_alignLeft="@+id/txtPrezime"
+        android:layout_alignStart="@+id/txtPrezime"
+        android:text="Username:" />
+
+    <TextView
+        android:id="@+id/txtPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editPass"
+        android:layout_alignBottom="@+id/editPass"
+        android:layout_alignEnd="@+id/txtUsername"
+        android:layout_alignRight="@+id/txtUsername"
+        android:text="Password:" />
+
+    <TextView
+        android:id="@+id/txtConfirmPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editEmail"
+        android:layout_alignLeft="@+id/txtUsername"
+        android:layout_alignStart="@+id/txtUsername"
+        android:text="Confirm password:" />
+
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editTelefon"
+        android:layout_alignLeft="@+id/txtConfirmPass"
+        android:layout_alignStart="@+id/txtConfirmPass"
+        android:text="Email:" />
+
+    <TextView
+        android:id="@+id/txtTelefon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editTelefon"
+        android:layout_alignLeft="@+id/txtEmail"
+        android:layout_alignStart="@+id/txtEmail"
+        android:text="Br. Telefona:" />
+
+    <EditText
+        android:id="@+id/editPass"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/editConfirmPass"
+        android:layout_alignLeft="@+id/editConfirmPass"
+        android:layout_alignStart="@+id/editConfirmPass"
+        android:autoSizeTextType="uniform"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/editConfirmPass"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/txtConfirmPass"
+        android:layout_alignLeft="@+id/editEmail"
+        android:layout_alignStart="@+id/editEmail"
+        android:autoSizeTextType="uniform"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/editTelefon"
+        android:layout_alignLeft="@+id/editTelefon"
+        android:layout_alignStart="@+id/editTelefon"
+        android:autoSizeTextType="uniform"
+        android:ems="10"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/editIme"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/editPrezime"
+        android:layout_alignLeft="@+id/editPrezime"
+        android:layout_alignStart="@+id/editPrezime"
+        android:autoSizeTextType="uniform"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editPrezime"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/editUsername"
+        android:layout_alignLeft="@+id/editUsername"
+        android:layout_alignStart="@+id/editUsername"
+        android:autoSizeTextType="uniform"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    <EditText
+        android:id="@+id/editUsername"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/editPass"
+        android:layout_alignLeft="@+id/editPass"
+        android:layout_alignStart="@+id/editPass"
+        android:autoSizeTextType="uniform"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <EditText
+        android:id="@+id/editTelefon"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/btnCreate"
+        android:layout_marginBottom="63dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/txtConfirmPass"
+        android:layout_toRightOf="@+id/txtConfirmPass"
+        android:ems="10"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_toEndOf="@+id/txtUsername"
+        android:layout_toRightOf="@+id/txtUsername"
+        android:background="@android:color/background_light"
+        android:onClick="onClickCreate"
+        android:text="Create" />
+
+    <TextView
+        android:id="@+id/txtNazivFirme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editNazivFirme"
+        android:layout_alignBottom="@+id/editNazivFirme"
+        android:layout_alignLeft="@+id/txtToken"
+        android:layout_alignStart="@+id/txtToken"
+        android:text="NazivFirme:" />
+
+    <EditText
+        android:id="@+id/editNazivFirme"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/editToken"
+        android:layout_alignLeft="@+id/editToken"
+        android:layout_alignStart="@+id/editToken"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editToken"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/editIme"
+        android:layout_alignLeft="@+id/editIme"
+        android:layout_alignStart="@+id/editIme"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/txtToken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editIme"
+        android:layout_alignLeft="@+id/txtIme"
+        android:layout_alignStart="@+id/txtIme"
+        android:text="Token:" />
+
+</RelativeLayout>
