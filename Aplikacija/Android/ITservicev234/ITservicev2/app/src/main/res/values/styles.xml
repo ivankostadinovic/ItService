@@ -1,0 +1,71 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/Narandzasti</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="EntryButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/rounded_button</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">13dp</item>
+        <item name="android:layout_marginRight">80dp</item>
+        <item name="android:layout_marginLeft">80dp</item>
+    </style>
+
+    <style name="CustomButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/rounded_txt_button</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/NarandzastiSvetliji</item>
+        <item name="android:layout_marginRight">120dp</item>
+        <item name="android:layout_marginLeft">120dp</item>
+    </style>
+
+    <style name="btnCancel" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/button_cancel</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:layout_marginRight">120dp</item>
+        <item name="android:layout_marginLeft">120dp</item>
+    </style>
+
+    <style name="TextViewHeader" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textSize">17dp</item>
+        <item name="android:textColor">@color/SvetloSiva</item>
+    </style>
+    <style name="CustomCardView" parent="CardView">
+        <item name="android:background">@drawable/cardview</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+
+    <style name="NasEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/White</item>
+        <item name="android:backgroundTint">@color/Narandzasti</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginLeft">30dp</item>
+        <item name="android:layout_marginRight">30dp</item>
+        <item name="android:ems">10</item>
+    </style>
+
+    <style name="AppTheme.CustomTheme">
+        <item name="android:background">@color/PopBoja</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+
+    </style>
+
+
+</resources>

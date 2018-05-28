@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChangePassActivity"
+    tools:layout_editor_absoluteY="25dp">
+    <Button
+        android:id="@+id/btnSubmitChangePass"
+        style="@style/EntryButton"
+        android:layout_marginTop="20dp"
+        android:text="@string/PromeniSifru"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editChangeConfirmPass" />
+
+    <EditText
+        android:id="@+id/editOldPass"
+        style="@style/NasEditText"
+        android:hint="@string/stara_Sifra"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.026" />
+
+    <EditText
+        android:id="@+id/editNewPass"
+        style="@style/NasEditText"
+        android:hint="@string/nova_Sifra"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/editOldPass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/editChangeConfirmPass"
+        style="@style/NasEditText"
+        android:layout_marginTop="20dp"
+        android:hint="@string/potvrdi_Sifru"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editNewPass" />
+
+
+</android.support.constraint.ConstraintLayout>

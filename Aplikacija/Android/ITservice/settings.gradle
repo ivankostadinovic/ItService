@@ -1,1 +1,0 @@
-include ':app', ':ojdbc6', ':mssql-jdbc-6.4.0.jre9', ':jtds-1.3.1'
