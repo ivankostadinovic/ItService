@@ -18,6 +18,7 @@ import com.example.app.itservicev2.Klase.Problem;
 import com.example.app.itservicev2.KorisnikProfilFragment;
 import com.example.app.itservicev2.LoginActivity;
 import com.example.app.itservicev2.Custom.OnSwipeTouchListener;
+import com.example.app.itservicev2.PregledProblemaFragment;
 import com.example.app.itservicev2.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -107,7 +108,7 @@ public class KlijentActivity extends BaseActivity {
     public void instanceFragment(List<Problem> listaP)// poziva se preko bazaPristup objekta startuje fragment
     {
         pregledProblemaFragment=PregledProblemaFragment.newInstance(klijent,listaP,false);
-        bazaPristup.postaviProblemListener(listaP);
+        bazaPristup.postaviKlijentProblemListener(klijent.getId());
         otvoriFragment(pregledProblemaFragment);
 
         hideProgress();

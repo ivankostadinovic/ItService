@@ -14,7 +14,7 @@ import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Custom.BaseActivity;
 import com.example.app.itservicev2.Klase.Problem;
 import com.example.app.itservicev2.Klase.Serviser;
-import com.example.app.itservicev2.KlijentPaket.PregledProblemaFragment;
+import com.example.app.itservicev2.PregledProblemaFragment;
 import com.example.app.itservicev2.KorisnikProfilFragment;
 import com.example.app.itservicev2.LoginActivity;
 import com.example.app.itservicev2.R;
@@ -29,6 +29,7 @@ public class ServiserActivity extends BaseActivity {
     private BazaPristup bazaPristup;
     public KorisnikProfilFragment profilFragment;
     public PregledProblemaFragment pregledProblemaFragment;
+    public PregledNeprihvacenihProbFragment pregledNeprihvacenihProbFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -39,6 +40,7 @@ public class ServiserActivity extends BaseActivity {
                    otvoriFragment(profilFragment);
                     return true;
                 case R.id.navigation_prijavljeni_problemi:
+                    otvoriFragment(pregledNeprihvacenihProbFragment);
                     return true;
                 case R.id.navigation_pregled_problema:
                     otvoriFragment(pregledProblemaFragment);
@@ -91,8 +93,8 @@ public class ServiserActivity extends BaseActivity {
     }
     public void instanceFragment(List<Problem>listaP)
     {
-         pregledProblemaFragment=PregledProblemaFragment.newInstance(serviser,listaP,true);
-        otvoriFragment(pregledProblemaFragment);
+         pregledNeprihvacenihProbFragment=pregledNeprihvacenihProbFragment.newInstance(serviser,listaP);
+        otvoriFragment(pregledNeprihvacenihProbFragment);
 
         hideProgress();
 
@@ -111,10 +113,16 @@ public class ServiserActivity extends BaseActivity {
 
         bazaPristup=new BazaPristup(this);
 
-        showProgress();
-        bazaPristup.ucitajProbleme(serviser.getId(),true);
 
         profilFragment= KorisnikProfilFragment.newInstance(serviser);
+        pregledProblemaFragment=PregledProblemaFragment.newInstance(serviser,null,true);
+
+        bazaPristup.ucitajNeprihvaceneProbleme(serviser.getId());
+        bazaPristup.postaviServiserProblemListener(serviser.getId());
+        showProgress();
+       bazaPristup.postaviNeprihvaceniProblemListener();
+
+
        // otvoriFragment(profilFragment);
 
 

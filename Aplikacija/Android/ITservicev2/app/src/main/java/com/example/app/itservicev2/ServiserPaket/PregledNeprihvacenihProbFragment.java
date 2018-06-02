@@ -1,4 +1,4 @@
-package com.example.app.itservicev2.KlijentPaket;
+package com.example.app.itservicev2.ServiserPaket;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,18 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.app.itservicev2.Baza.BazaPristup;
-import com.example.app.itservicev2.Custom.KlijentProblemAdapter;
 import com.example.app.itservicev2.Custom.RecyclerViewOnSwipe;
 import com.example.app.itservicev2.Klase.Korisnik;
 import com.example.app.itservicev2.Klase.Problem;
+import com.example.app.itservicev2.Klase.Serviser;
+import com.example.app.itservicev2.KlijentPaket.KlijentActivity;
+import com.example.app.itservicev2.KlijentPaket.KlijentProblemAdapter;
 import com.example.app.itservicev2.R;
 import com.example.app.itservicev2.ServiserPaket.ServiserProblemAdapter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-
-public class PregledProblemaFragment extends Fragment {
+public class PregledNeprihvacenihProbFragment extends Fragment {
 
 
 
@@ -28,27 +30,21 @@ public class PregledProblemaFragment extends Fragment {
     public List<Problem> listaProblema;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private Korisnik korisnik;
-    private boolean isServiser;
+    private Serviser serviser;
+
 
     private BazaPristup bazaPristup;
 
 
-    public PregledProblemaFragment() {
+    public PregledNeprihvacenihProbFragment() {
 
     }
 
-    public void dodajProblem(Problem p)
-    {
-        listaProblema.add(p);
-    }
-
-
-    public static PregledProblemaFragment newInstance(Korisnik k,List<Problem> lp ,boolean isServiser) {
-        PregledProblemaFragment fragment = new PregledProblemaFragment();
+    public static PregledNeprihvacenihProbFragment newInstance(Serviser s, List<Problem> lp ) {
+        PregledNeprihvacenihProbFragment fragment = new PregledNeprihvacenihProbFragment();
         Bundle args = new Bundle();
-        args.putSerializable("isServiser",isServiser);
-        args.putSerializable("Korisnik",k);
+
+        args.putSerializable("Serviser",s);
         args.putSerializable("ListaProblema", (Serializable) lp);
         fragment.setArguments(args);
         return fragment;
@@ -58,12 +54,18 @@ public class PregledProblemaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            korisnik=(Korisnik)getArguments().getSerializable("Korisnik");
+            serviser=(Serviser) getArguments().getSerializable("Serviser");
             listaProblema=(List<Problem>)getArguments().getSerializable("ListaProblema");
-            isServiser=(Boolean)getArguments().getSerializable("isServiser");
         }
     }
 
+    public void dodajProblem(Problem p)
+    {
+        if(listaProblema==null)
+            listaProblema=new ArrayList<>();
+        listaProblema.add(p);
+        loadProbleme(listaProblema);
+    }
 
 
 
@@ -72,18 +74,18 @@ public class PregledProblemaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_pregled_problema, container, false);
 
-            incijalizujKomponente(view);
+        incijalizujKomponente(view);
 
-            return view;
+        return view;
     }
 
     public void incijalizujKomponente(View view)
     {
         bazaPristup=new BazaPristup(getActivity());
 
-       recyclerView=(RecyclerView)view.findViewById(R.id.recylcerView);
-       recyclerView.setHasFixedSize(true);
-       recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView=(RecyclerView)view.findViewById(R.id.recylcerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
         recyclerView.addOnItemTouchListener(new RecyclerViewOnSwipe(getActivity(),
@@ -95,12 +97,7 @@ public class PregledProblemaFragment extends Fragment {
                     @Override
                     public void onRightSwipe(View view, int position) {
 
-                        if(isServiser)
-                        {
-
-                        }
-                        else
-                        ((KlijentActivity)getActivity()).otvoriFragment(((KlijentActivity)getActivity()).prijaviProblemFragment);
+                            //((KlijentActivity)getActivity()).otvoriFragment(((KlijentActivity)getActivity()).prijaviProblemFragment);
                     }
                     @Override
                     public void onClick(View view, int position) {
@@ -117,29 +114,20 @@ public class PregledProblemaFragment extends Fragment {
 
     public void ucitajProblemPromenu(Problem problem)
     {
-        if(listaProblema!=null) {
-          for(int i=0;i<listaProblema.size();i++)
-              if(listaProblema.get(i).getProblemId().equals(problem.getProblemId()))
-                  listaProblema.set(i,problem);
-
-            loadProbleme(listaProblema);
-        }
+        for(int i=0;i<listaProblema.size();i++)
+            if(listaProblema.get(i).getProblemId().equals(problem.getProblemId()))
+                 listaProblema.remove(i);
+        loadProbleme(listaProblema);
     }
 
     public void loadProbleme(List<Problem>listaP)
     {
 
         listaProblema=listaP;
-
-        if(isServiser)
-        {
-            adapter=new ServiserProblemAdapter(listaProblema,getActivity());
-        }
-        else
-            adapter=new KlijentProblemAdapter(listaProblema,getActivity());
+        adapter=new ServiserNeprihvaceniProbAdapter(listaProblema,getActivity(),serviser);
 
         if(recyclerView!=null)
-        recyclerView.setAdapter(adapter);
+            recyclerView.setAdapter(adapter);
 
     }
 

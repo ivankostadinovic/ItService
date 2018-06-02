@@ -49,15 +49,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onStart();
 
 
-        user=auth.getCurrentUser();
-        if(user!=null)
-        {
-            showProgress();
-           editEmail.setText(user.getEmail());
-           editPass.setText("*****");
-            bazaPristup.ucitajKorisnika(user.getUid());
-       }
-       hideProgress();
+       // user=auth.getCurrentUser();
+       // if(user!=null)
+       // {
+       //     showProgress();
+        //   editEmail.setText(user.getEmail());
+        //   editPass.setText("*****");
+        //    bazaPristup.ucitajKorisnika(user.getUid());
+     // }
+    //   hideProgress();
     }
 
     @Override

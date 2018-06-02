@@ -13,11 +13,13 @@ import com.example.app.itservicev2.Klase.Serviser;
 import com.example.app.itservicev2.KlijentPaket.KlijentActivity;
 import com.example.app.itservicev2.LoginActivity;
 import com.example.app.itservicev2.ServiserPaket.ServiserActivity;
+import com.example.app.itservicev2.ServiserPaket.ServiserNeprihvaceniPopActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +41,8 @@ public class BazaPristup {
     private Activity activity;
     private Korisnik korisnik;
     private FirebaseUser user;
-    private ValueEventListener problemListener;
+
+
 
     public BazaPristup() {
         db = FirebaseDatabase.getInstance().getReference();
@@ -52,13 +55,70 @@ public class BazaPristup {
         auth = FirebaseAuth.getInstance();
         activity = a;
         korisnik = null;
-        problemListener = new ValueEventListener() {
+
+
+
+    }
+    public void prihvatiProblem(Problem problem)
+    {
+        db.child("Problemi-korisnika").child(problem.getIdKlijenta()).child(problem.getProblemId()).setValue(problem);
+        db.child("Problemi-neprihvaceni").child(problem.getProblemId()).removeValue();
+        db.child("Problemi-korisnika").child(problem.getIdServisera()).child(problem.getProblemId()).setValue(problem);
+    }
+    public void ucitajKlijenta(String Uid)
+    {
+        db.child("Klijenti").child(Uid).addListenerForSingleValueEvent(new ValueEventListener() { //ucitvaanje klijenta koji je prijvaio problem
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Klijent k=dataSnapshot.getValue(Klijent.class);
+                ((ServiserNeprihvaceniPopActivity)activity).popuniKomponente(k);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void ucitajNeprihvaceneProbleme(String Uid)
+    {
+        db.child("Problemi-neprihvaceni").addListenerForSingleValueEvent(new ValueEventListener() {// za ucitvaanje svih liste neprihvacenih problema
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Problem> listaP = new ArrayList<>();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    listaP.add(ds.getValue(Problem.class));
+                }
+                ((ServiserActivity)activity).instanceFragment(listaP);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    public void postaviServiserProblemListener(String Uid)
+    {
+        ChildEventListener problemListener = new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) { // kada serviser prihvati problem da se update njegova lista problema
                 Problem p = dataSnapshot.getValue(Problem.class);
+                ((ServiserActivity) activity).pregledProblemaFragment.dodajProblem(p);
+            }
 
-                ((KlijentActivity) activity).pregledProblemaFragment.ucitajProblemPromenu(p);
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
             }
 
@@ -67,6 +127,41 @@ public class BazaPristup {
 
             }
         };
+        db.child("Problemi-korisnika").child(Uid).addChildEventListener(problemListener);
+
+    }
+    public void postaviNeprihvaceniProblemListener()
+    {
+
+        ChildEventListener neprihvaceniProblemListener = new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {// kada se doda novi problem da se update lsita neprihvacenih problema
+                Problem p = dataSnapshot.getValue(Problem.class);
+                ((ServiserActivity) activity).pregledNeprihvacenihProbFragment.dodajProblem(p);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {// kada se prihvati problem da se obrise iz liste neprihvacenih !
+                Problem p = dataSnapshot.getValue(Problem.class);
+                ((ServiserActivity) activity).pregledNeprihvacenihProbFragment.ucitajProblemPromenu(p);
+            }
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        db.child("Problemi-neprihvaceni").addChildEventListener(neprihvaceniProblemListener);
 
     }
 
@@ -74,15 +169,17 @@ public class BazaPristup {
 
     public void ucitajProbleme(String Uid, final boolean isServiser)
     {
-        db.child("Porblemi-korisnika").child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {// za ucitvaanje svih problema
+        db.child("Problemi-korisnika").child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {// za ucitvaanje svih problema
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Problem> listaP = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     listaP.add(ds.getValue(Problem.class));
                 }
-                if (isServiser)
-                    ((ServiserActivity)activity).instanceFragment(listaP);
+                if(isServiser)
+                {
+                    ((ServiserActivity)activity).pregledProblemaFragment.loadProbleme(listaP);
+                }
                 else
                     ((KlijentActivity)activity).instanceFragment(listaP);
             }
@@ -93,35 +190,59 @@ public class BazaPristup {
         });
 
     }
-    public void postaviProblemListener(List<Problem> listaP)// za promenu kada serviser prihvati problem
+    public void postaviKlijentProblemListener(String Uid)// kada serviser prihvati prijavljeni problem, da se update lsita klijentovih problema
     {
+        ChildEventListener problemListener = new ChildEventListener() {
 
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-             for(Problem p:listaP)
-             {
-                 db.child("Porblemi-korisnika").child(p.getIdKlijenta()).child(p.getProblemId()).addValueEventListener(problemListener);
-             }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Problem p = dataSnapshot.getValue(Problem.class);
+                ((KlijentActivity) activity).pregledProblemaFragment.ucitajProblemPromenu(p);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+            db.child("Problemi-korisnika").child(Uid).addChildEventListener(problemListener);
 
     }
-    public void upisiProblem(Problem problem)
+    public void upisiProblem(Problem problem)                    //dodavanje novog problema
     {
-         String kljuc= db.child("Problemi-neprihvaceni").push().getKey();
+        String kljuc= db.child("Problemi-neprihvaceni").push().getKey();
         problem.setProblemId(kljuc);
-        db.child("Porblemi-korisnika").child(problem.getIdKlijenta()).child(kljuc).setValue(problem);
+        db.child("Problemi-korisnika").child(problem.getIdKlijenta()).child(kljuc).setValue(problem);
         db.child("Problemi-neprihvaceni").child(kljuc).setValue(problem);
 
-        db.child("Porblemi-korisnika").child(problem.getIdKlijenta()).child(kljuc).addValueEventListener(problemListener);
+
 
     }
 
-    public void proveriLogin(String email, String pass) {
+    public void proveriLogin(String email, String pass) {       // autentifikacija user i passworda
 
         final OnCompleteListener<AuthResult> a = new OnCompleteListener<AuthResult>() {
 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    //Toast.makeText(activity, "Uspesno!", Toast.LENGTH_SHORT).show();
+
                     FirebaseUser user=task.getResult().getUser();
                     ucitajKorisnika(user.getUid());
 
@@ -138,7 +259,7 @@ public class BazaPristup {
 
     public void ucitajKorisnika(final String Uid)
     {
-        db.child("Korisnici").child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        db.child("Korisnici").child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {// inicijalizacija activity-a
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.child("IsServiser").getValue(Boolean.class)) {
@@ -147,10 +268,8 @@ public class BazaPristup {
                 }
                 else
                 {
-
                     Serviser s=dataSnapshot.getValue(Serviser.class);
                     ((LoginActivity)activity).pokreniServiserActivity(s);
-
 
                 }
 
@@ -164,7 +283,7 @@ public class BazaPristup {
 
     }
 
-    public void upisiKlijenta(final Klijent k) {
+    public void upisiKlijenta(final Klijent k) {                                // registracija klijenta
         final OnCompleteListener<AuthResult> registrovanje = new OnCompleteListener<AuthResult>() {
 
             @Override
@@ -177,14 +296,7 @@ public class BazaPristup {
                     db.child("Korisnici").child(u.getUid()).child("Id").setValue(u.getUid());
                     db.child("Klijenti").child(u.getUid()).child("Id").setValue(u.getUid());
 
-                    //Serviser s=new Serviser(k.getIme(),k.getPrezime(),k.getEmail(),k.getPassword(),k.getBrojtelefona(),"okkkk","nvm");
 
-                    //db.child("Serviseri").child(u.getUid()).setValue(s);
-
-                    //db.child("Korisnici").child(u.getUid()).setValue(s);
-                   // db.child("Korisnici").child(u.getUid()).child("IsServiser").setValue(true);
-                    //db.child("Korisnici").child(u.getUid()).child("Id").setValue(u.getUid());
-                    //db.child("Serviseri").child(u.getUid()).child("Id").setValue(u.getUid());
 
                     Toast.makeText(activity, "Registrovanje uspesno!.", Toast.LENGTH_LONG).show();
                     activity.finish();
@@ -200,7 +312,7 @@ public class BazaPristup {
 
 
     }
-    public void posaljiEmailZaPromenu(String email)
+    public void posaljiEmailZaPromenu(String email)                 // mail za promenu passworda
     {
         auth.setLanguageCode("sr");
         auth.sendPasswordResetEmail(email)
@@ -221,7 +333,7 @@ public class BazaPristup {
     }
 
 
-    public void promeniKorisnika(Korisnik k,boolean isServiser)
+    public void promeniKorisnika(Korisnik k,boolean isServiser)         // promena licnih informacija korisnika
     {
         if(!isServiser) {
             db.child("Klijenti").child(k.getId()).setValue( (Klijent)k);
