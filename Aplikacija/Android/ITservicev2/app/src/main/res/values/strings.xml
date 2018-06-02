@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Bravo basse</string>
+    <string name="ForgotPassword"><u>Zaboravili ste šifru?</u></string>
+    <string name="SignUp"><u>Napravi nalog.</u></string>
+    <string name="title_activity_klijent">ITservice</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="PromeniSifru">Promeni sifru</string>
+    <string name="odjavi_Se">Odjavi se</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="naziv_firme">Naziv firme</string>
+    <string name="telefon">Telefon</string>
+    <string name="ime">Ime</string>
+    <string name="prezime">Prezime</string>
+    <string name="potvrdite_sifru">Potvrdite šifru</string>
+    <string name="sifra">Šifra</string>
+    <string name="email">Email</string>
+    <string name="uloguj_se">Uloguj se</string>
+    <string name="firma">Firma</string>
+    <string name="registruj_se">Registruj se</string>
+    <string name="promeni_email">Promeni email</string>
+    <string name="stara_Sifra">Stara šifra</string>
+    <string name="nova_Sifra">Nova šifra</string>
+    <string name="potvrdi_Sifru">Potvrdi šifru</string>
+    <string name="novi_Email">Novi email</string>
+    <string name="stari_Email">Stari email</string>
+    <string name="pass_Email"><b>Šifra</b></string>
+    <string name="prezime_DT"><b>Prezime:</b></string>
+    <string name="email_DT"><b>Email:</b></string>
+    <string name="telefon_DT"><b>Telefon:</b></string>
+    <string name="nazivfirme_DT"><b>NazivFirme:</b></string>
+    <string name="promeni_Sifru">Promeni Šifru</string>
+    <string name="promeni_Email">Promeni Email</string>
+    <string name="ime_DT"><b>Ime:</b></string>
+    <string name="firma_DP"><b>Firma:</b></string>
+    <string name="sacuvaj_promene">Sačuvaj promene</string>
+    <string name="promeni_podatke">Promeni podatke</string>
+    <string name="naziv_problema"><b>Naziv problema:</b></string>
+    <string name="prijavi_problem">Prijavi problem</string>
+    <string name="Adresa">Adresa</string>
+    <string name="opis_problema">Opis problema</string>
+    <string name="posalji_email">Pošaji Email</string>
+    <string name="hardverski">Hardverski</string>
+    <string name="softverski">Softverski</string>
+    <string name="status"><u><b>Status:</b></u></string>
+    <string name="naziv_problemaB"><u><b>Naziv:</b></u></string>
+    <string name="datum_prijave"><u><b>Datum:</b></u></string>
+    <string name="otkazi">Otkaži</string>
+    <string name="tip_problema"><u><b>Tip:</b></u></string>
+    <string name="klijent"><b>Klijent:</b></string>
+    <string name="opis"><b>Opis:</b></string>
+    <string name="naziv"><b>Naziv:</b></string>
+    <string name="tip_problema_label">Tip problema:</string>
+    <string name="nacin_resavanja">Način rešavanja:</string>
+    <string name="telefonom">Telefonom</string>
+    <string name="remote">Remote pristup</string>
+    <string name="servis">Donosenje u servis</string>
+    <string name="teren">Izlazak na teren</string>
+    <string name="prihvati_problem">Prihvati problem</string>
+
+</resources>

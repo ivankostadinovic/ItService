@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="txtImeKlijenta" type="id" />
-    <item name="PrezimeKlijenta" type="id" />
-    <item name="TelefonKlijenta" type="id">TelefonKlijenta</item>
-    <item name="EmailKlijenta" type="id">EmailKlijenta</item>
-    <item name="FirmaKlijenta" type="id">FirmaKlijenta</item>
-</resources>

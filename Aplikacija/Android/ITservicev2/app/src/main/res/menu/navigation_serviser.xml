@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_profil"
+        android:icon="@drawable/ic_profil_slika"
+        android:title="Profil"/>
+
+    <item
+        android:id="@+id/navigation_prijavljeni_problemi"
+        android:icon="@drawable/ic_prijavi_problem_slika"
+        android:title="Prijavljeni problemi"/>
+
+    <item
+        android:id="@+id/navigation_pregled_problema"
+        android:icon="@drawable/ic_obavestenja_slika"
+        android:title="Pregled problema"/>
+
+</menu>
