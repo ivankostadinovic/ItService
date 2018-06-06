@@ -43,6 +43,8 @@ public class ServiserActivity extends BaseActivity {
                     otvoriFragment(pregledNeprihvacenihProbFragment);
                     return true;
                 case R.id.navigation_pregled_problema:
+                    //if(pregledProblemaFragment.listaProblema==null)
+                        showProgress();
                     otvoriFragment(pregledProblemaFragment);
                     return true;
             }
@@ -68,9 +70,11 @@ public class ServiserActivity extends BaseActivity {
     {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
         transaction.replace(R.id.fragmentConteiner, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,6 +100,7 @@ public class ServiserActivity extends BaseActivity {
          pregledNeprihvacenihProbFragment=pregledNeprihvacenihProbFragment.newInstance(serviser,listaP);
         otvoriFragment(pregledNeprihvacenihProbFragment);
 
+        bazaPristup.postaviNeprihvaceniProblemListener();
         hideProgress();
 
     }
@@ -118,9 +123,10 @@ public class ServiserActivity extends BaseActivity {
         pregledProblemaFragment=PregledProblemaFragment.newInstance(serviser,null,true);
 
         bazaPristup.ucitajNeprihvaceneProbleme(serviser.getId());
+
         bazaPristup.postaviServiserProblemListener(serviser.getId());
         showProgress();
-       bazaPristup.postaviNeprihvaceniProblemListener();
+
 
 
        // otvoriFragment(profilFragment);

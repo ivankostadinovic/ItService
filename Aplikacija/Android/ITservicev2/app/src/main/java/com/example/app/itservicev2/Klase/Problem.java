@@ -4,6 +4,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Problem implements Serializable {
 
@@ -24,13 +25,23 @@ public class Problem implements Serializable {
 
     }
 
-    public String getProblemId() {
-        return problemId;
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this.problemId.equals(((Problem)obj).getProblemId()))
+            return true;
+        return false;
     }
+
+
 
     public void setProblemId(String problemId) {
 
         this.problemId = problemId;
+    }
+
+    public String getProblemId() {
+        return problemId;
     }
 
     public void setStatus(String status) {

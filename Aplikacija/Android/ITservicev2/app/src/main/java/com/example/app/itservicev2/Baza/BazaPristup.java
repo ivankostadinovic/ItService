@@ -100,6 +100,7 @@ public class BazaPristup {
     }
     public void postaviServiserProblemListener(String Uid)
     {
+
         ChildEventListener problemListener = new ChildEventListener() {
 
             @Override
@@ -138,7 +139,7 @@ public class BazaPristup {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {// kada se doda novi problem da se update lsita neprihvacenih problema
                 Problem p = dataSnapshot.getValue(Problem.class);
-                ((ServiserActivity) activity).pregledNeprihvacenihProbFragment.dodajProblem(p);
+                  ((ServiserActivity) activity).pregledNeprihvacenihProbFragment.dodajProblem(p);
             }
 
             @Override
@@ -169,6 +170,7 @@ public class BazaPristup {
 
     public void ucitajProbleme(String Uid, final boolean isServiser)
     {
+       // ((ServiserActivity)activity).pregledProblemaFragment.showProgress();
         db.child("Problemi-korisnika").child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {// za ucitvaanje svih problema
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -178,7 +180,11 @@ public class BazaPristup {
                 }
                 if(isServiser)
                 {
+
                     ((ServiserActivity)activity).pregledProblemaFragment.loadProbleme(listaP);
+                   // ((ServiserActivity)activity).pregledProblemaFragment.hideProgress();
+
+
                 }
                 else
                     ((KlijentActivity)activity).instanceFragment(listaP);

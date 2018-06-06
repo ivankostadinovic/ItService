@@ -1,5 +1,6 @@
 package com.example.app.itservicev2;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.app.itservicev2.Baza.BazaPristup;
+import com.example.app.itservicev2.Custom.BaseActivity;
 import com.example.app.itservicev2.Custom.RecyclerViewOnSwipe;
 import com.example.app.itservicev2.Klase.Korisnik;
 import com.example.app.itservicev2.Klase.Problem;
 import com.example.app.itservicev2.KlijentPaket.KlijentActivity;
 import com.example.app.itservicev2.KlijentPaket.KlijentProblemAdapter;
+import com.example.app.itservicev2.ServiserPaket.ServiserActivity;
 import com.example.app.itservicev2.ServiserPaket.ServiserProblemAdapter;
 
 import java.io.Serializable;
@@ -31,12 +34,29 @@ public class PregledProblemaFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private Korisnik korisnik;
     private boolean isServiser;
+    private ProgressDialog progressDialog;
 
     private BazaPristup bazaPristup;
 
 
     public PregledProblemaFragment() {
 
+    }
+    public void showProgress()
+    {
+        if(progressDialog==null)
+        {
+            progressDialog=new ProgressDialog(getContext());
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Ucitavanje");
+
+        }
+        progressDialog.show();
+    }
+    public void hideProgress()
+    {
+        if(progressDialog!=null&&progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 
     public void dodajProblem(Problem p)
@@ -75,6 +95,7 @@ public class PregledProblemaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_pregled_problema, container, false);
 
+
             incijalizujKomponente(view);
 
             return view;
@@ -111,8 +132,11 @@ public class PregledProblemaFragment extends Fragment {
                     }
                 }));
 
-        if(isServiser&&listaProblema==null)// za prvo ucitavanje liste serviserovih problema!(moze progress bar)
-            bazaPristup.ucitajProbleme(korisnik.getId(),isServiser);
+        if(isServiser&&listaProblema==null) {// za prvo ucitavanje liste serviserovih problema!(moze progress bar)
+
+
+            bazaPristup.ucitajProbleme(korisnik.getId(), isServiser);
+        }
         else
          loadProbleme(listaProblema);
 
@@ -140,6 +164,7 @@ public class PregledProblemaFragment extends Fragment {
         if(isServiser)
         {
             adapter=new ServiserProblemAdapter(listaProblema,getActivity());
+            ((ServiserActivity)getActivity()).hideProgress();
         }
         else
             adapter=new KlijentProblemAdapter(listaProblema,getActivity());

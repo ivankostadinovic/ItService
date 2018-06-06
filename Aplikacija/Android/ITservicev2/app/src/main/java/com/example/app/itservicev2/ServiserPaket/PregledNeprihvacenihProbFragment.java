@@ -63,6 +63,9 @@ public class PregledNeprihvacenihProbFragment extends Fragment {
     {
         if(listaProblema==null)
             listaProblema=new ArrayList<>();
+        if(listaProblema.contains(p))
+            return;
+
         listaProblema.add(p);
         loadProbleme(listaProblema);
     }

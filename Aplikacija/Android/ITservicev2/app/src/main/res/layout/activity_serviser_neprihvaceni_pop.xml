@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/klijent"
+        style="@style/TextViewHeader"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -22,9 +23,10 @@
         android:id="@+id/txtNazivLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/naziv_problema"
+        android:text="@string/naziv"
+        style="@style/TextViewHeader"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,6 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/opis"
+        style="@style/TextViewHeader"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -46,23 +49,23 @@
         android:id="@+id/txtKlijent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/txtKlijentLabel"
         app:layout_constraintHorizontal_bias="0.02"
         app:layout_constraintLeft_toRightOf="@id/txtNazivLabel"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.029" />
+        app:layout_constraintTop_toTopOf="@id/txtKlijentLabel"
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/txtNaziv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/txtNazivLabel"
         app:layout_constraintHorizontal_bias="0.02"
         app:layout_constraintLeft_toRightOf="@id/txtNazivLabel"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintTop_toTopOf="@id/txtNazivLabel"
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/txtOpis"

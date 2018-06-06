@@ -39,7 +39,7 @@
     <string name="firma_DP"><b>Firma:</b></string>
     <string name="sacuvaj_promene">Sačuvaj promene</string>
     <string name="promeni_podatke">Promeni podatke</string>
-    <string name="naziv_problema"><b>Naziv problema:</b></string>
+    <string name="naziv_problema">Naziv problema</string>
     <string name="prijavi_problem">Prijavi problem</string>
     <string name="Adresa">Adresa</string>
     <string name="opis_problema">Opis problema</string>
@@ -51,9 +51,9 @@
     <string name="datum_prijave"><u><b>Datum:</b></u></string>
     <string name="otkazi">Otkaži</string>
     <string name="tip_problema"><u><b>Tip:</b></u></string>
-    <string name="klijent"><b>Klijent:</b></string>
-    <string name="opis"><b>Opis:</b></string>
-    <string name="naziv"><b>Naziv:</b></string>
+    <string name="klijent"><u><b>Klijent:</b></u></string>
+    <string name="opis"><u><b>Opis:</b></u></string>
+    <string name="naziv"><u><b>Naziv:</b></u></string>
     <string name="tip_problema_label">Tip problema:</string>
     <string name="nacin_resavanja">Način rešavanja:</string>
     <string name="telefonom">Telefonom</string>
@@ -61,5 +61,8 @@
     <string name="servis">Donosenje u servis</string>
     <string name="teren">Izlazak na teren</string>
     <string name="prihvati_problem">Prihvati problem</string>
+    <string name="ServiserLabel"><u><b>Serviser:</b></u></string>
+    <string name="NacinResavanjaLabel"><b><u>Nacin resavanja:</u></b></string>
+    <string name="Obavestenje"><b><u>Obavestenje:</u></b></string>
 
 </resources>
