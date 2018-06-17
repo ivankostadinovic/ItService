@@ -1,7 +1,15 @@
 package com.example.app.itservicev2.Baza;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,9 +19,12 @@ import com.example.app.itservicev2.Klase.Korisnik;
 import com.example.app.itservicev2.Klase.Problem;
 import com.example.app.itservicev2.Klase.Serviser;
 import com.example.app.itservicev2.KlijentPaket.KlijentActivity;
+import com.example.app.itservicev2.KlijentPaket.KlijentProblemPopActivity;
 import com.example.app.itservicev2.LoginActivity;
+import com.example.app.itservicev2.R;
 import com.example.app.itservicev2.ServiserPaket.ServiserActivity;
 import com.example.app.itservicev2.ServiserPaket.ServiserNeprihvaceniPopActivity;
+import com.example.app.itservicev2.ServiserPaket.ServiserProblemPopActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -41,6 +52,11 @@ public class BazaPristup {
     private Activity activity;
     private Korisnik korisnik;
     private FirebaseUser user;
+    private ChildEventListener klijentProblemListener;
+    private ChildEventListener serviserProblemListener;
+    private ChildEventListener neprihvaceniProblemListener;
+    private String Uid;
+
 
 
 
@@ -58,6 +74,7 @@ public class BazaPristup {
 
 
 
+
     }
     public void prihvatiProblem(Problem problem)
     {
@@ -65,13 +82,33 @@ public class BazaPristup {
         db.child("Problemi-neprihvaceni").child(problem.getProblemId()).removeValue();
         db.child("Problemi-korisnika").child(problem.getIdServisera()).child(problem.getProblemId()).setValue(problem);
     }
+    public void ucitajServisera(String Uid)
+    {
+        db.child("Serviseri").child(Uid).addListenerForSingleValueEvent(new ValueEventListener()//ucitvanje servisera koji je prihvatio problem
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               Serviser s=dataSnapshot.getValue(Serviser.class);
+                ((KlijentProblemPopActivity)activity).popuniKomponente(s);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
     public void ucitajKlijenta(String Uid)
     {
         db.child("Klijenti").child(Uid).addListenerForSingleValueEvent(new ValueEventListener() { //ucitvaanje klijenta koji je prijvaio problem
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Klijent k=dataSnapshot.getValue(Klijent.class);
-                ((ServiserNeprihvaceniPopActivity)activity).popuniKomponente(k);
+                if(activity instanceof ServiserNeprihvaceniPopActivity)
+                    ((ServiserNeprihvaceniPopActivity)activity).popuniKomponente(k);
+                else
+                    ((ServiserProblemPopActivity)activity).popuniKomponente(k);
             }
 
             @Override
@@ -80,16 +117,16 @@ public class BazaPristup {
             }
         });
     }
-    public void ucitajNeprihvaceneProbleme(String Uid)
+    public void ucitajNeprihvaceneProbleme()
     {
-        db.child("Problemi-neprihvaceni").addListenerForSingleValueEvent(new ValueEventListener() {// za ucitvaanje svih liste neprihvacenih problema
+        db.child("Problemi-neprihvaceni").addListenerForSingleValueEvent(new ValueEventListener() {// za ucitvaanje  svih  neprihvacenih problema
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Problem> listaP = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     listaP.add(ds.getValue(Problem.class));
                 }
-                ((ServiserActivity)activity).instanceFragment(listaP);
+                ((ServiserActivity)activity).pregledNeprihvacenihProbFragment.loadProbleme(listaP);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -100,8 +137,8 @@ public class BazaPristup {
     }
     public void postaviServiserProblemListener(String Uid)
     {
-
-        ChildEventListener problemListener = new ChildEventListener() {
+        this.Uid=Uid;
+         serviserProblemListener = new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) { // kada serviser prihvati problem da se update njegova lista problema
@@ -128,18 +165,46 @@ public class BazaPristup {
 
             }
         };
-        db.child("Problemi-korisnika").child(Uid).addChildEventListener(problemListener);
+        db.child("Problemi-korisnika").child(Uid).addChildEventListener(serviserProblemListener);
 
     }
     public void postaviNeprihvaceniProblemListener()
     {
 
-        ChildEventListener neprihvaceniProblemListener = new ChildEventListener() {
+         neprihvaceniProblemListener = new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {// kada se doda novi problem da se update lsita neprihvacenih problema
                 Problem p = dataSnapshot.getValue(Problem.class);
-                  ((ServiserActivity) activity).pregledNeprihvacenihProbFragment.dodajProblem(p);
+                  if(((ServiserActivity) activity).pregledNeprihvacenihProbFragment.listaProblema!=null&&
+                          !((ServiserActivity) activity).pregledNeprihvacenihProbFragment.listaProblema.contains(p))
+                            // posto se triggeruje i prvi put kada se postavi listener mora da postoji uslov samo za novi problem da se aktivira
+                  {
+                      final int  id=12345;
+
+                      NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity)
+                              .setAutoCancel(true)
+                              .setSmallIcon(R.drawable.ic_android_black_24dp)
+                              .setContentTitle("Novi problem  prijavljen!")
+                              .setContentText(p.getNaziv())
+                              .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                      long[] pattern = {500,500,500,500,500};
+                      mBuilder.setVibrate(pattern);
+
+                      Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                      mBuilder.setSound(alarmSound);
+
+                      Intent i=new Intent(activity,LoginActivity.class);
+                      PendingIntent pendingIntent=PendingIntent.getActivity(activity, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                      mBuilder.setContentIntent(pendingIntent);
+
+                      NotificationManagerCompat notificationManager = NotificationManagerCompat.from(activity);
+                      notificationManager.notify(id,mBuilder.build());
+
+                      ((ServiserActivity) activity).pregledNeprihvacenihProbFragment.dodajProblem(p);
+                  }
+
             }
 
             @Override
@@ -165,40 +230,10 @@ public class BazaPristup {
         db.child("Problemi-neprihvaceni").addChildEventListener(neprihvaceniProblemListener);
 
     }
-
-
-
-    public void ucitajProbleme(String Uid, final boolean isServiser)
-    {
-       // ((ServiserActivity)activity).pregledProblemaFragment.showProgress();
-        db.child("Problemi-korisnika").child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {// za ucitvaanje svih problema
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                List<Problem> listaP = new ArrayList<>();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    listaP.add(ds.getValue(Problem.class));
-                }
-                if(isServiser)
-                {
-
-                    ((ServiserActivity)activity).pregledProblemaFragment.loadProbleme(listaP);
-                   // ((ServiserActivity)activity).pregledProblemaFragment.hideProgress();
-
-
-                }
-                else
-                    ((KlijentActivity)activity).instanceFragment(listaP);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
     public void postaviKlijentProblemListener(String Uid)// kada serviser prihvati prijavljeni problem, da se update lsita klijentovih problema
     {
-        ChildEventListener problemListener = new ChildEventListener() {
+        this.Uid=Uid;
+        klijentProblemListener = new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -208,9 +243,30 @@ public class BazaPristup {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Problem p = dataSnapshot.getValue(Problem.class);
+                final int  id=12345;
+
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity)
+                        .setAutoCancel(true)
+                        .setSmallIcon(R.drawable.ic_android_black_24dp)
+                        .setContentTitle("Problem prihvacen!")
+                        .setContentText(p.getObavestenje())
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                long[] pattern = {500,500,500,500,500};
+                mBuilder.setVibrate(pattern);
+
+                Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                mBuilder.setSound(alarmSound);
+
+                Intent i=new Intent(activity,LoginActivity.class);
+                PendingIntent pendingIntent=PendingIntent.getActivity(activity, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                mBuilder.setContentIntent(pendingIntent);
+
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(activity);
+                notificationManager.notify(id,mBuilder.build());
+
                 ((KlijentActivity) activity).pregledProblemaFragment.ucitajProblemPromenu(p);
             }
-
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
 
@@ -226,10 +282,59 @@ public class BazaPristup {
 
             }
         };
-
-            db.child("Problemi-korisnika").child(Uid).addChildEventListener(problemListener);
+        db.child("Problemi-korisnika").child(Uid).addChildEventListener(klijentProblemListener);
 
     }
+
+    public void otkaziKlijentProblemListener()
+    {
+        db.child("Problemi-korisnika").child(Uid).removeEventListener(klijentProblemListener);
+    }
+    public void otkaziServiserProblemListener()
+    {
+        db.child("Problemi-korisnika").child(Uid).removeEventListener(serviserProblemListener);
+    }
+    public void otkaziNeprihvaceniProblemListener()
+    {
+        db.child("Problemi-neprihvaceni").removeEventListener(neprihvaceniProblemListener);
+    }
+
+
+
+
+
+    public void startujProblem(Problem problem)
+    {
+        db.child("Problemi-korisnika").child(problem.getIdServisera()).child(problem.getProblemId()).setValue(problem);
+        db.child("Problemi-korisnika").child(problem.getIdKlijenta()).child(problem.getProblemId()).setValue(problem);
+
+    }
+    public void ucitajProbleme(String Uid, final boolean isServiser)
+    {
+
+        db.child("Problemi-korisnika").child(Uid).addListenerForSingleValueEvent(new ValueEventListener() {// za ucitvaanje svih problema
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Problem> listaP = new ArrayList<>();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    listaP.add(ds.getValue(Problem.class));
+                }
+                if(isServiser)
+                {
+                    ((ServiserActivity)activity).pregledProblemaFragment.loadProbleme(listaP);
+                }
+                else
+                    ((KlijentActivity)activity).pregledProblemaFragment.loadProbleme(listaP);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
     public void upisiProblem(Problem problem)                    //dodavanje novog problema
     {
         String kljuc= db.child("Problemi-neprihvaceni").push().getKey();
@@ -410,5 +515,11 @@ public class BazaPristup {
                         }
                     }
                 });
+    }
+
+    public void registrujStar(Serviser serviser)
+    {
+        db.child("Serviseri").child(serviser.getId()).child("starsCount").setValue(serviser.getStarsCount());
+        db.child("Korisnici").child(serviser.getId()).child("starsCount").setValue(serviser.getStarsCount());
     }
 }

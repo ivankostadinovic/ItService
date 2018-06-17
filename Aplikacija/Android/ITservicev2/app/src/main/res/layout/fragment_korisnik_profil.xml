@@ -30,7 +30,7 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2">
+                android:layout_weight="2.5">
 
                 <TextView
                     android:id="@+id/txtIme"
@@ -38,9 +38,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/ime_DT"
 
+
+                    style="@style/TextViewLabel"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0.127"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.087" />
@@ -48,11 +49,13 @@
                 <TextView
                     android:id="@+id/txtPrezime"
                     android:layout_width="wrap_content"
-                    android:layout_height="21dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/prezime_DT"
+
+
+                    style="@style/TextViewLabel"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0.259"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.272" />
@@ -62,9 +65,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/email_DT"
+
+
+                    style="@style/TextViewLabel"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0.159"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.67" />
@@ -76,11 +81,10 @@
                     android:text="@string/telefon_DT"
 
 
+                    style="@style/TextViewLabel"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0.225"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.467" />
 
@@ -91,11 +95,10 @@
                     android:text="@string/firma_DP"
                     android:visibility="invisible"
 
+                    style="@style/TextViewLabel"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0.166"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.87" />
 
@@ -104,7 +107,7 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="8">
+                android:layout_weight="7.5">
 
 
                 <TextView
@@ -231,12 +234,11 @@
                 android:id="@+id/btnChangePass"
                 style="@style/CustomButton"
                 android:text="@string/promeni_Sifru"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.554"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.802" />
+                app:layout_constraintTop_toBottomOf="@id/btnChangeEmail"
+                android:layout_marginTop="12dp"
+                />
 
             <Button
             android:id="@+id/btnChangeEmail"
@@ -253,13 +255,11 @@
                 style="@style/btnCancel"
                 android:text="@string/otkazi"
                 android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="invisible"
+                android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.545"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.282"
-                android:visibility="invisible"/>
+                app:layout_constraintTop_toBottomOf="@id/btnPromeniPodatke" />
 
             <Button
                 android:id="@+id/btnSaveChanges"

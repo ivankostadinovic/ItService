@@ -14,7 +14,7 @@
 
     <item
         android:id="@+id/navigation_pregled_problema"
-        android:icon="@drawable/ic_obavestenja_slika"
+        android:icon="@drawable/serviser_prijavljeni_problemi_icon_v2"
         android:title="Pregled problema"/>
 
 

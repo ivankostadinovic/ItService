@@ -76,7 +76,7 @@ public class ServiserProblemAdapter extends RecyclerView.Adapter<ServiserProblem
             int position=getAdapterPosition();
             Problem p=listaProblema.get(position);
 
-            Intent i=new Intent(context, ServiserNeprihvaceniPopActivity.class);
+            Intent i=new Intent(context, ServiserProblemPopActivity.class);
             i.putExtra("Problem",p);
             context.startActivity(i);
 

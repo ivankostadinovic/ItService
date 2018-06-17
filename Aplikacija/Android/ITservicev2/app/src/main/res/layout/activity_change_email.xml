@@ -3,11 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".ChangeEmailActivity"
-    tools:layout_editor_absoluteY="25dp">
+    tools:layout_editor_absoluteY="25dp"
+    android:background="@drawable/popup"
+    >
 
     <EditText
+
         android:id="@+id/editPassEmail"
         style="@style/NasEditText"
         android:hint="@string/pass_Email"

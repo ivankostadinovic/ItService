@@ -7,13 +7,13 @@
         android:title="Profil"/>
 
     <item
-        android:id="@+id/navigation_prijavljeni_problemi"
-        android:icon="@drawable/ic_prijavi_problem_slika"
+        android:id="@+id/navigation_neprihvaceni_problemi"
+        android:icon="@drawable/serviser_prijavljeni_problemi_icon_v2"
         android:title="Prijavljeni problemi"/>
 
     <item
         android:id="@+id/navigation_pregled_problema"
-        android:icon="@drawable/ic_obavestenja_slika"
+        android:icon="@drawable/serviser_prihvaceni_problemi_icon"
         android:title="Pregled problema"/>
 
 </menu>

@@ -32,22 +32,23 @@ public class KlijentActivity extends BaseActivity {
     public PrijaviProblemFragment prijaviProblemFragment;
     public PregledProblemaFragment pregledProblemaFragment;
     private BazaPristup bazaPristup;
+    public  BottomNavigationView navigation;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_profil:
-
-                    otvoriFragment(profilFragment);
+                    otvoriFragment(profilFragment,true);
                     return true;
                 case R.id.navigation_prijavi_problem:
-
-                    otvoriFragment(prijaviProblemFragment);
+                    otvoriFragment(prijaviProblemFragment,true);
 
                     return true;
                 case R.id.navigation_pregled_problema:
-                    otvoriFragment(pregledProblemaFragment);
+                    if(pregledProblemaFragment.listaProblema==null)
+                        showProgress();
+                    otvoriFragment(pregledProblemaFragment,true);
                     return true;
             }
             return false;
@@ -63,22 +64,34 @@ public class KlijentActivity extends BaseActivity {
 
     }
 
-    public void otvoriFragment(Fragment fragment)
+    public void otvoriFragment(Fragment fragment,boolean flag)
     {
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if(flag)
+            transaction.setCustomAnimations(R.animator.slide_in_left,
+                    R.animator.slide_out_right, 0, 0);
+        else
+            transaction.setCustomAnimations(R.animator.slide_in_right,
+                    R.animator.slide_out_left, 0, 0);
+
             transaction.replace(R.id.fragmentConteiner, fragment);
             transaction.addToBackStack(null);
             transaction.commit();
 
 
     }
-
+    public void otkaziListener(){
+        if(pregledProblemaFragment.bazaPristup!=null)
+        pregledProblemaFragment.bazaPristup.otkaziKlijentProblemListener();
+    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
+        otkaziListener();
         finish();
     }
 
@@ -98,6 +111,7 @@ public class KlijentActivity extends BaseActivity {
 
         if (id == R.id.odjaviSe) {
             FirebaseAuth.getInstance().signOut();
+            otkaziListener();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
@@ -105,13 +119,10 @@ public class KlijentActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void instanceFragment(List<Problem> listaP)// poziva se preko bazaPristup objekta startuje fragment
-    {
-        pregledProblemaFragment=PregledProblemaFragment.newInstance(klijent,listaP,false);
-        bazaPristup.postaviKlijentProblemListener(klijent.getId());
-        otvoriFragment(pregledProblemaFragment);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-        hideProgress();
     }
 
     @Override
@@ -127,15 +138,18 @@ public class KlijentActivity extends BaseActivity {
         prijaviProblemFragment=PrijaviProblemFragment.newInstance(klijent);
 
         profilFragment= KorisnikProfilFragment.newInstance(klijent);
+        pregledProblemaFragment=PregledProblemaFragment.newInstance(klijent,false);
 
-        showProgress();
-
-        bazaPristup.ucitajProbleme(klijent.getId(),false);// ucitavanje liste iz baze i startovanje fragmenta
-
-
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.botom_navigation_klijent);
+        navigation = (BottomNavigationView) findViewById(R.id.botom_navigation_klijent);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        otvoriFragment(pregledProblemaFragment,true);
+        navigation.setSelectedItemId(R.id.navigation_pregled_problema);
+
+
+
+
+
 
 
         View view =findViewById(R.id.klijent_activity);
@@ -143,20 +157,25 @@ public class KlijentActivity extends BaseActivity {
 
             public void onSwipeLeft() {
 
-                if( profilFragment.isVisible()) {
-                    otvoriFragment(prijaviProblemFragment);
+                if (profilFragment.isVisible()) {
+                    otvoriFragment(prijaviProblemFragment,true);
+                    navigation.setSelectedItemId(R.id.navigation_prijavi_problem);
                     return;
                 }
                 if(prijaviProblemFragment.isVisible())
                 {
-                    otvoriFragment(pregledProblemaFragment);
+                    otvoriFragment(pregledProblemaFragment,true);
+                    navigation.setSelectedItemId(R.id.navigation_pregled_problema);
+
                     return;
                 }
             }
             public void onSwipeRight() {
                 if(prijaviProblemFragment.isVisible())
                 {
-                    otvoriFragment(profilFragment);
+                    otvoriFragment(profilFragment,false);
+                    navigation.setSelectedItemId(R.id.navigation_profil);
+
                     return;
                 }
             }

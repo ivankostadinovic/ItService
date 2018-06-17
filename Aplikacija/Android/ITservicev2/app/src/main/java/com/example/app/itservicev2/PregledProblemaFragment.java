@@ -36,7 +36,7 @@ public class PregledProblemaFragment extends Fragment {
     private boolean isServiser;
     private ProgressDialog progressDialog;
 
-    private BazaPristup bazaPristup;
+    public BazaPristup bazaPristup;
 
 
     public PregledProblemaFragment() {
@@ -59,20 +59,15 @@ public class PregledProblemaFragment extends Fragment {
             progressDialog.dismiss();
     }
 
-    public void dodajProblem(Problem p)
-    {
-        if(listaProblema==null)
-            listaProblema=new ArrayList<>();
-        listaProblema.add(p);
-    }
 
 
-    public static PregledProblemaFragment newInstance(Korisnik k,List<Problem> lp ,boolean isServiser) {
+
+    public static PregledProblemaFragment newInstance(Korisnik k,boolean isServiser) {
         PregledProblemaFragment fragment = new PregledProblemaFragment();
         Bundle args = new Bundle();
         args.putSerializable("isServiser",isServiser);
         args.putSerializable("Korisnik",k);
-        args.putSerializable("ListaProblema", (Serializable) lp);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,7 +77,6 @@ public class PregledProblemaFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             korisnik=(Korisnik)getArguments().getSerializable("Korisnik");
-            listaProblema=(List<Problem>)getArguments().getSerializable("ListaProblema");
             isServiser=(Boolean)getArguments().getSerializable("isServiser");
         }
     }
@@ -98,12 +92,14 @@ public class PregledProblemaFragment extends Fragment {
 
             incijalizujKomponente(view);
 
+
             return view;
     }
 
     public void incijalizujKomponente(View view)
     {
-        bazaPristup=new BazaPristup(getActivity());
+        if(bazaPristup==null)
+            bazaPristup=new BazaPristup(getActivity());
 
        recyclerView=(RecyclerView)view.findViewById(R.id.recylcerView);
        recyclerView.setHasFixedSize(true);
@@ -121,10 +117,13 @@ public class PregledProblemaFragment extends Fragment {
 
                         if(isServiser)
                         {
-
+                            ((ServiserActivity)getActivity()).otvoriFragment(((ServiserActivity)getActivity()).pregledNeprihvacenihProbFragment,false);
+                            ((ServiserActivity)getActivity()).navigation.setSelectedItemId(R.id.navigation_neprihvaceni_problemi);//ovo treba da se promeni
                         }
-                        else
-                        ((KlijentActivity)getActivity()).otvoriFragment(((KlijentActivity)getActivity()).prijaviProblemFragment);
+                        else {
+                            ((KlijentActivity) getActivity()).otvoriFragment(((KlijentActivity) getActivity()).prijaviProblemFragment,false);
+                            ((KlijentActivity) getActivity()).navigation.setSelectedItemId(R.id.navigation_prijavi_problem);
+                        }
                     }
                     @Override
                     public void onClick(View view, int position) {
@@ -132,16 +131,27 @@ public class PregledProblemaFragment extends Fragment {
                     }
                 }));
 
-        if(isServiser&&listaProblema==null) {// za prvo ucitavanje liste serviserovih problema!(moze progress bar)
-
-
+        if(listaProblema==null) {// za prvo ucitavanje liste problema
             bazaPristup.ucitajProbleme(korisnik.getId(), isServiser);
+
+            if(isServiser)
+                bazaPristup.postaviServiserProblemListener(korisnik.getId());
+            else
+                bazaPristup.postaviKlijentProblemListener(korisnik.getId());
         }
         else
-         loadProbleme(listaProblema);
+            loadProbleme(listaProblema);
 
 
 
+
+    }
+
+    public void dodajProblem(Problem p)
+    {
+        if(listaProblema==null)
+            return;
+        listaProblema.add(p);
     }
 
 
@@ -151,7 +161,6 @@ public class PregledProblemaFragment extends Fragment {
           for(int i=0;i<listaProblema.size();i++)
               if(listaProblema.get(i).getProblemId().equals(problem.getProblemId()))
                   listaProblema.set(i,problem);
-
             loadProbleme(listaProblema);
         }
     }
@@ -165,12 +174,14 @@ public class PregledProblemaFragment extends Fragment {
         {
             adapter=new ServiserProblemAdapter(listaProblema,getActivity());
             ((ServiserActivity)getActivity()).hideProgress();
-        }
-        else
-            adapter=new KlijentProblemAdapter(listaProblema,getActivity());
 
+        }
+        else {
+            adapter = new KlijentProblemAdapter(listaProblema, getActivity());
+            ((KlijentActivity)getActivity()).hideProgress();
+        }
         if(recyclerView!=null)
-        recyclerView.setAdapter(adapter);
+            recyclerView.setAdapter(adapter);
 
     }
 

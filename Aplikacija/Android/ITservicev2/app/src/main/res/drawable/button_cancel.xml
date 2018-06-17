@@ -4,16 +4,16 @@
         <shape android:shape="rectangle">
             <corners android:radius="35dp"></corners>
             <stroke android:width="1.5dp"
-                android:color="#ffffff"></stroke>
+                android:color="@color/BorderSiva"></stroke>
             <gradient android:angle="90" android:startColor="@color/PopBoja" android:centerColor="#333333" android:endColor="@color/PopBoja"/>
         </shape>
 
-    </item>            <corners android:radius="35dp"></corners>
+    </item>
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="35dp"></corners>
             <stroke android:width="1.5dp"
-                android:color="#ffffff"></stroke>
+                android:color="@color/BorderSiva"></stroke>
         </shape>
 
     </item>

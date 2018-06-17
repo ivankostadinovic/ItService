@@ -121,7 +121,7 @@ public class PrijaviProblemFragment extends Fragment implements View.OnClickList
     {
         problem=new Problem();
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm");
         String datum = df.format(c);
         problem.setDatumPrijavljivanja(datum);
         problem.setOpis(editOpis.getText().toString());

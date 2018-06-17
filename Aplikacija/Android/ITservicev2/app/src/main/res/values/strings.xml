@@ -46,14 +46,14 @@
     <string name="posalji_email">Pošaji Email</string>
     <string name="hardverski">Hardverski</string>
     <string name="softverski">Softverski</string>
-    <string name="status"><u><b>Status:</b></u></string>
-    <string name="naziv_problemaB"><u><b>Naziv:</b></u></string>
-    <string name="datum_prijave"><u><b>Datum:</b></u></string>
+    <string name="status"><b>Status:</b></string>
+    <string name="naziv_problemaB"><b>Naziv:</b></string>
+    <string name="datum_prijave"><b>Datum:</b></string>
     <string name="otkazi">Otkaži</string>
-    <string name="tip_problema"><u><b>Tip:</b></u></string>
-    <string name="klijent"><u><b>Klijent:</b></u></string>
-    <string name="opis"><u><b>Opis:</b></u></string>
-    <string name="naziv"><u><b>Naziv:</b></u></string>
+    <string name="tip_problema"><b>Tip:</b></string>
+    <string name="klijent"><b>Klijent:</b></string>
+    <string name="opis"><b>Opis:</b></string>
+    <string name="naziv"><b>Naziv:</b></string>
     <string name="tip_problema_label">Tip problema:</string>
     <string name="nacin_resavanja">Način rešavanja:</string>
     <string name="telefonom">Telefonom</string>
@@ -61,8 +61,16 @@
     <string name="servis">Donosenje u servis</string>
     <string name="teren">Izlazak na teren</string>
     <string name="prihvati_problem">Prihvati problem</string>
-    <string name="ServiserLabel"><u><b>Serviser:</b></u></string>
-    <string name="NacinResavanjaLabel"><b><u>Nacin resavanja:</u></b></string>
-    <string name="Obavestenje"><b><u>Obavestenje:</u></b></string>
+    <string name="ServiserLabel"><b>Serviser:</b></string>
+    <string name="NacinResavanjaLabel"><b>Nacin resavanja:</b></string>
+    <string name="Obavestenje"><b>Obavestenje:</b></string>
+    <string name="startuj_problem">Startuj problem</string>
+    <string name="promeni_nacin_resavanja">Promeni način rešavanja</string>
+    <string name="zavrsi_problem">Završi problem</string>
+    <string name="jmbg"><b>JMBG</b></string>
+    <string name="t">T</string>
+    <string name="s">S</string>
+    <string name="r">R</string>
+    <string name="i">I</string>
 
 </resources>

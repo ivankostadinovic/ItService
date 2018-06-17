@@ -1,10 +1,6 @@
 package com.example.app.itservicev2.Klase;
 
-import com.google.firebase.database.IgnoreExtraProperties;
-
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
 
 public class Problem implements Serializable {
 
@@ -13,18 +9,40 @@ public class Problem implements Serializable {
     private String naziv;
     private String Opis;
     private String datumPrijavljivanja;
-    private String datumResavajna;
+    private String datumResavanja;
     private String tipProblema;
     private String nacinResavanja;
     private String idKlijenta;
     private String idServisera;
     private String adresa;
+    private String obavestenje;
+    private String startProblema;
+
+
+
+    public String getObavestenje() {
+        return obavestenje;
+    }
+
+    public void setObavestenje(String obavestenje) {
+
+        this.obavestenje = obavestenje;
+    }
 
     public void Problem()
+
     {
 
     }
 
+    public void setStartProblema(String startProblema) {
+        this.startProblema = startProblema;
+    }
+
+    public String getStartProblema() {
+
+        return startProblema;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -69,8 +87,8 @@ public class Problem implements Serializable {
         this.datumPrijavljivanja = datumPrijavljivanja;
     }
 
-    public void setDatumResavajna(String datumResavajna) {
-        this.datumResavajna = datumResavajna;
+    public void setDatumResavanja(String datumResavanja) {
+        this.datumResavanja = datumResavanja;
     }
 
     public void setTipProblema(String tipProblema) {
@@ -106,8 +124,8 @@ public class Problem implements Serializable {
         return datumPrijavljivanja;
     }
 
-    public String getDatumResavajna() {
-        return datumResavajna;
+    public String getDatumResavanja() {
+        return datumResavanja;
     }
 
     public String getTipProblema() {

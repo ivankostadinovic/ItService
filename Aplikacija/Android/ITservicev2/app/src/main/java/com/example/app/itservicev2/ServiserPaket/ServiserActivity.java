@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Custom.BaseActivity;
+import com.example.app.itservicev2.Custom.OnSwipeTouchListener;
 import com.example.app.itservicev2.Klase.Problem;
 import com.example.app.itservicev2.Klase.Serviser;
 import com.example.app.itservicev2.PregledProblemaFragment;
@@ -30,6 +32,7 @@ public class ServiserActivity extends BaseActivity {
     public KorisnikProfilFragment profilFragment;
     public PregledProblemaFragment pregledProblemaFragment;
     public PregledNeprihvacenihProbFragment pregledNeprihvacenihProbFragment;
+    public  BottomNavigationView navigation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -37,15 +40,15 @@ public class ServiserActivity extends BaseActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_profil:
-                   otvoriFragment(profilFragment);
+                   otvoriFragment(profilFragment,true);
                     return true;
-                case R.id.navigation_prijavljeni_problemi:
-                    otvoriFragment(pregledNeprihvacenihProbFragment);
+                case R.id.navigation_neprihvaceni_problemi:
+                    otvoriFragment(pregledNeprihvacenihProbFragment,true);
                     return true;
                 case R.id.navigation_pregled_problema:
-                    //if(pregledProblemaFragment.listaProblema==null)
+                    if(pregledProblemaFragment.listaProblema==null)
                         showProgress();
-                    otvoriFragment(pregledProblemaFragment);
+                    otvoriFragment(pregledProblemaFragment,true);
                     return true;
             }
             return false;
@@ -58,19 +61,32 @@ public class ServiserActivity extends BaseActivity {
         inicijalizujKomponente();
     }
 
+    public void otkaziListenere(){
+        pregledNeprihvacenihProbFragment.bazaPristup.otkaziNeprihvaceniProblemListener();
+        if(pregledProblemaFragment.bazaPristup!=null)
+            pregledProblemaFragment.bazaPristup.otkaziServiserProblemListener();
+
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        otkaziListenere();
         finish();
     }
 
 
-    public void otvoriFragment(Fragment fragment)
+
+    public void otvoriFragment(Fragment fragment,boolean flag)
     {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        if(flag)
+        transaction.setCustomAnimations(R.animator.slide_in_left,
+                R.animator.slide_out_right, 0, 0);
+        else
+            transaction.setCustomAnimations(R.animator.slide_in_right,
+                    R.animator.slide_out_left, 0, 0);
         transaction.replace(R.id.fragmentConteiner, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -89,21 +105,14 @@ public class ServiserActivity extends BaseActivity {
 
         if (id == R.id.odjaviSe) {
             FirebaseAuth.getInstance().signOut();
+            otkaziListenere();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
 
         return super.onOptionsItemSelected(item);
     }
-    public void instanceFragment(List<Problem>listaP)
-    {
-         pregledNeprihvacenihProbFragment=pregledNeprihvacenihProbFragment.newInstance(serviser,listaP);
-        otvoriFragment(pregledNeprihvacenihProbFragment);
 
-        bazaPristup.postaviNeprihvaceniProblemListener();
-        hideProgress();
-
-    }
 
     @Override
     public void inicijalizujKomponente() {
@@ -111,7 +120,7 @@ public class ServiserActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.botom_navigation_serviser);
+        navigation = (BottomNavigationView) findViewById(R.id.botom_navigation_serviser);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         serviser =(Serviser) getIntent().getExtras().getSerializable("Serviser");
@@ -119,17 +128,37 @@ public class ServiserActivity extends BaseActivity {
         bazaPristup=new BazaPristup(this);
 
 
+        pregledNeprihvacenihProbFragment=PregledNeprihvacenihProbFragment.newInstance(serviser);
         profilFragment= KorisnikProfilFragment.newInstance(serviser);
-        pregledProblemaFragment=PregledProblemaFragment.newInstance(serviser,null,true);
+        pregledProblemaFragment=PregledProblemaFragment.newInstance(serviser,true);
 
-        bazaPristup.ucitajNeprihvaceneProbleme(serviser.getId());
+        if(pregledNeprihvacenihProbFragment.listaProblema==null)
+            showProgress();
+        otvoriFragment(pregledNeprihvacenihProbFragment,true);
+        navigation.setSelectedItemId(R.id.navigation_neprihvaceni_problemi);
 
-        bazaPristup.postaviServiserProblemListener(serviser.getId());
-        showProgress();
 
 
 
-       // otvoriFragment(profilFragment);
+
+
+        View view =findViewById(R.id.serviser_activity);
+        view.setOnTouchListener(new OnSwipeTouchListener(this){
+            public void onSwipeLeft() {
+
+                if (profilFragment.isVisible()) {
+                    otvoriFragment(pregledNeprihvacenihProbFragment,true);
+                    navigation.setSelectedItemId(R.id.navigation_neprihvaceni_problemi);
+                    return;
+                }
+            }
+        });
+
+
+
+
+
+
 
 
 

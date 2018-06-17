@@ -2,11 +2,16 @@
 <resources>
     <color name="Red">#AA0000</color>
     <color name="TextDugme">#AAAAAA</color>
+
     <color name="Narandzasti">#C55E07</color>
+    <color name="NarandzastiLabel">#D77F18</color>
     <color name="NarandzastiSvetliji">#F77F29</color>
     <color name="NarandzastiTamniji">#B44D06</color>
+
     <color name="White">#FFFFFF</color>
     <color name="PopBoja">#444444</color>
+    <color name="BorderSiva">#BBBBBBBB</color>
+    <color name="DefaultBoja">#333333</color>
     <color name="SvetloSiva">#CCCCCC</color>
     <color name="bottomBarSiva">#222222</color>
     <color name="NarandzastiTamnijiTamniji">#933C05</color>

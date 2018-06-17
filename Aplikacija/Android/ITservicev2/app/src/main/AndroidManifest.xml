@@ -29,13 +29,19 @@
         <activity
             android:name=".ChangeEmailActivity"
             android:theme="@style/AppTheme.CustomTheme" />
+
         <activity
             android:name=".KlijentPaket.KlijentProblemPopActivity"
             android:theme="@style/AppTheme.CustomTheme" />
         <activity android:name=".ServiserPaket.ServiserActivity" />
-        <activity android:name=".ServiserPaket.ServiserNeprihvaceniPopActivity"
-            android:theme="@style/AppTheme.CustomTheme">
-        </activity>
+
+        <activity
+            android:name=".ServiserPaket.ServiserNeprihvaceniPopActivity"
+            android:theme="@style/AppTheme.CustomTheme"/>
+
+        <activity android:name=".ServiserPaket.ServiserProblemPopActivity"
+            android:theme="@style/AppTheme.CustomTheme"/>
+
     </application>
 
 </manifest>

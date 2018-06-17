@@ -33,19 +33,19 @@ public class PregledNeprihvacenihProbFragment extends Fragment {
     private Serviser serviser;
 
 
-    private BazaPristup bazaPristup;
+    public BazaPristup bazaPristup;
 
 
     public PregledNeprihvacenihProbFragment() {
 
     }
 
-    public static PregledNeprihvacenihProbFragment newInstance(Serviser s, List<Problem> lp ) {
+    public static PregledNeprihvacenihProbFragment newInstance(Serviser s ) {
         PregledNeprihvacenihProbFragment fragment = new PregledNeprihvacenihProbFragment();
         Bundle args = new Bundle();
 
         args.putSerializable("Serviser",s);
-        args.putSerializable("ListaProblema", (Serializable) lp);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +55,7 @@ public class PregledNeprihvacenihProbFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             serviser=(Serviser) getArguments().getSerializable("Serviser");
-            listaProblema=(List<Problem>)getArguments().getSerializable("ListaProblema");
+
         }
     }
 
@@ -63,9 +63,6 @@ public class PregledNeprihvacenihProbFragment extends Fragment {
     {
         if(listaProblema==null)
             listaProblema=new ArrayList<>();
-        if(listaProblema.contains(p))
-            return;
-
         listaProblema.add(p);
         loadProbleme(listaProblema);
     }
@@ -77,14 +74,17 @@ public class PregledNeprihvacenihProbFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_pregled_problema, container, false);
 
+
         incijalizujKomponente(view);
+
 
         return view;
     }
 
     public void incijalizujKomponente(View view)
     {
-        bazaPristup=new BazaPristup(getActivity());
+        if(bazaPristup==null)
+         bazaPristup=new BazaPristup(getActivity());
 
         recyclerView=(RecyclerView)view.findViewById(R.id.recylcerView);
         recyclerView.setHasFixedSize(true);
@@ -96,11 +96,15 @@ public class PregledNeprihvacenihProbFragment extends Fragment {
                 new RecyclerViewOnSwipe.OnTouchActionListener() {
                     @Override
                     public void onLeftSwipe(View view, int position) {
+                        ((ServiserActivity)getActivity()).otvoriFragment(((ServiserActivity)getActivity()).pregledProblemaFragment,true);
+                        ((ServiserActivity)getActivity()).navigation.setSelectedItemId(R.id.navigation_pregled_problema);
+
                     }
                     @Override
                     public void onRightSwipe(View view, int position) {
 
-                            //((KlijentActivity)getActivity()).otvoriFragment(((KlijentActivity)getActivity()).prijaviProblemFragment);
+                            ((ServiserActivity)getActivity()).otvoriFragment(((ServiserActivity)getActivity()).profilFragment,false);
+                             ((ServiserActivity)getActivity()).navigation.setSelectedItemId(R.id.navigation_profil);
                     }
                     @Override
                     public void onClick(View view, int position) {
@@ -108,9 +112,12 @@ public class PregledNeprihvacenihProbFragment extends Fragment {
                     }
                 }));
 
-        loadProbleme(listaProblema);
-
-
+        if(listaProblema==null) {
+            bazaPristup.ucitajNeprihvaceneProbleme();
+            bazaPristup.postaviNeprihvaceniProblemListener();
+        }
+        else
+            loadProbleme(listaProblema);
 
     }
 
@@ -128,6 +135,9 @@ public class PregledNeprihvacenihProbFragment extends Fragment {
 
         listaProblema=listaP;
         adapter=new ServiserNeprihvaceniProbAdapter(listaProblema,getActivity(),serviser);
+
+        if(getActivity()!=null)
+          ((ServiserActivity)getActivity()).hideProgress();
 
         if(recyclerView!=null)
             recyclerView.setAdapter(adapter);

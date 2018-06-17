@@ -23,7 +23,6 @@ import com.example.app.itservicev2.R;
 public class ServiserNeprihvaceniPopActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView txtKlijent,txtNaziv,txtOpis;
-    private RadioButton radioTelefonom,radioRemote,radioTeren,radioDonosenje;
     private RadioGroup radioGroup;
     private BazaPristup bazaPristup;
     private Button btnPrihvatiProblem;
@@ -51,16 +50,13 @@ public class ServiserNeprihvaceniPopActivity extends BaseActivity implements Vie
         txtNaziv=(TextView)findViewById(R.id.txtNaziv);
         txtOpis=(TextView)findViewById(R.id.txtOpis);
 
-        radioRemote=(RadioButton)findViewById(R.id.radioRemote);
-        radioTelefonom=(RadioButton)findViewById(R.id.radioTelefon);
-        radioTeren=(RadioButton)findViewById(R.id.radioTeren);
-        radioDonosenje=(RadioButton)findViewById(R.id.radioDonosenje);
+
         radioGroup=(RadioGroup)findViewById(R.id.RadioGroupNacinResavanja);
 
         btnPrihvatiProblem=(Button)findViewById(R.id.btnPrihvatiProblem);
         btnPrihvatiProblem.setOnClickListener(this);
 
-        bazaPristup=new BazaPristup(this    );
+        bazaPristup=new BazaPristup(this  );
 
         problem=(Problem)getIntent().getSerializableExtra("Problem");
         serviser=(Serviser)getIntent().getSerializableExtra("Serviser");
@@ -99,15 +95,20 @@ public class ServiserNeprihvaceniPopActivity extends BaseActivity implements Vie
             switch (radioGroup.getCheckedRadioButtonId()) {
                 case R.id.radioDonosenje:
                     problem.setNacinResavanja("Donosenje u servis");
+                    problem.setObavestenje("Trebate doneti uredjaj u servis radi daljeg resavanja  Adresa je: ...");
                     break;
                 case R.id.radioRemote:
                     problem.setNacinResavanja("Remote pristup");
+                    problem.setObavestenje("Problem ce se resiti remote pristupom. Serviser ce vas pozvati uskoro radi daljeg dogovora!");
                     break;
                 case R.id.radioTelefon:
                     problem.setNacinResavanja("Telefonom");
-                   break;
+                    problem.setObavestenje("Problem ce se resiti telefonom. Serviser ce vas pozvati uskoro!");
+
+                    break;
                 case R.id.radioTeren:
                     problem.setNacinResavanja("Izlazak na teren");
+                    problem.setObavestenje("Serviser ce uskoro doci na vasu adresu");
                     break;
             }
             return true;
