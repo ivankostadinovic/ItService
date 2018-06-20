@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".KlijentPaket.KlijentProblemPopActivity"
+    tools:layout_editor_absoluteY="25dp"
+    android:background="@drawable/popup">
+
+    <TextView
+        android:id="@+id/txtNazivLabel"
+        style="@style/TextViewLabelPop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/naziv"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
+    <TextView
+        android:id="@+id/txtUredjajLabel"
+        style="@style/TextViewLabelPop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/uredjajB"
+
+
+        app:layout_constraintBottom_toBottomOf="@id/txtNazivLabel"
+        app:layout_constraintStart_toEndOf="@id/txtNaziv"
+        android:layout_marginStart="10dp"
+        app:layout_constraintTop_toTopOf="@id/txtNazivLabel"
+         />
+
+    <TextView
+        android:id="@+id/txtStatusLabel"
+        style="@style/TextViewLabelPop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/status"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13" />
+
+    <TextView
+        android:id="@+id/txtOpisLabel"
+        style="@style/TextViewLabelPop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/opis"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.21" />
+
+    <TextView
+        android:id="@+id/txtKlijentLabel"
+        style="@style/TextViewLabelPop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/klijent"
+
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
+    <TextView
+        android:id="@+id/txtNacinResavanjaLabel"
+        style="@style/TextViewLabelPop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/NacinResavanjaLabel"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.60" />
+    <TextView
+        android:id="@+id/txtDatumStartovanjaLabel"
+        style="@style/TextViewLabelPop"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/datum_startovanja"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.68" />
+    <TextView
+        android:id="@+id/txtDatumZavrsavanjaLabel"
+        style="@style/TextViewLabelPop"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:text="@string/datum_zavrsavanja"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.76" />
+
+
+
+    <TextView
+        android:id="@+id/txtDatumZavrsavanja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        style="@style/TextViewValue"
+
+        app:layout_constraintBottom_toBottomOf="@id/txtDatumZavrsavanjaLabel"
+        app:layout_constraintTop_toTopOf="@id/txtDatumZavrsavanjaLabel"
+
+
+        app:layout_constraintStart_toEndOf="@id/txtDatumZavrsavanjaLabel" />
+    <TextView
+        android:id="@+id/txtDatumStartovanja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        style="@style/TextViewValue"
+
+        app:layout_constraintBottom_toBottomOf="@id/txtDatumStartovanjaLabel"
+        app:layout_constraintTop_toTopOf="@id/txtDatumStartovanjaLabel"
+
+
+        app:layout_constraintStart_toEndOf="@id/txtDatumStartovanjaLabel" />
+
+
+    <TextView
+        android:id="@+id/txtNaziv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        style="@style/TextViewValue"
+
+        app:layout_constraintBottom_toBottomOf="@id/txtNazivLabel"
+        app:layout_constraintTop_toTopOf="@id/txtNazivLabel"
+
+
+        app:layout_constraintStart_toEndOf="@id/txtStatusLabel" />
+
+    <TextView
+        android:id="@+id/txtUredjaj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        style="@style/TextViewValue"
+
+        app:layout_constraintBottom_toBottomOf="@id/txtUredjajLabel"
+        app:layout_constraintTop_toTopOf="@id/txtUredjajLabel"
+
+
+        app:layout_constraintStart_toEndOf="@id/txtUredjajLabel"
+        />
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        style="@style/TextViewValue"
+        app:layout_constraintBottom_toBottomOf="@id/txtStatusLabel"
+
+
+        app:layout_constraintStart_toEndOf="@id/txtStatusLabel"
+        app:layout_constraintTop_toTopOf="@id/txtStatusLabel" />
+
+    <TextView
+        android:id="@+id/txtKlijent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        style="@style/TextViewValue"
+
+
+        app:layout_constraintBottom_toBottomOf="@id/txtKlijentLabel"
+
+
+        app:layout_constraintStart_toEndOf="@id/txtNacinResavanjaLabel"
+        app:layout_constraintTop_toTopOf="@id/txtKlijentLabel" />
+
+    <TextView
+        android:id="@+id/txtNacinResavanja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        style="@style/TextViewValue"
+
+
+
+        app:layout_constraintBottom_toBottomOf="@id/txtNacinResavanjaLabel"
+
+        app:layout_constraintStart_toEndOf="@id/txtNacinResavanjaLabel"
+        app:layout_constraintTop_toTopOf="@id/txtNacinResavanjaLabel" />
+
+    <TextView
+        android:id="@+id/txtOpis"
+        style="@style/TextViewOpis"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/txtKlijentLabel"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintStart_toStartOf="@id/txtKlijentLabel"
+        app:layout_constraintTop_toBottomOf="@id/txtOpisLabel"
+         />
+
+    <Button
+        android:id="@+id/btnStartProblem"
+        style="@style/EntryButton"
+        android:text="@string/startuj_problem"
+
+
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtNacinResavanjaLabel" />
+
+    <Button
+        android:id="@+id/btnSacuvajPromene"
+        style="@style/EntryButton"
+        android:text="@string/sacuvaj_promene"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/btnStartProblem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnStartProblem" />
+    <Button
+        style="@style/btnCancelPop"
+        android:id="@+id/btnOdustani"
+        android:text="@string/odustani"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="1"
+        />
+
+    <Button
+        android:id="@+id/btnFinishProblem"
+        style="@style/CustomButton"
+        android:text="@string/zavrsi_problem"
+        android:visibility="invisible"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnStartProblem" />
+
+    <Button
+        style="@style/btnCancelPop"
+        android:id="@+id/btnCancel"
+        android:text="@string/otkazi"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="@id/btnFinishProblem"
+        app:layout_constraintBottom_toBottomOf="@id/btnFinishProblem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <RadioGroup
+        android:id="@+id/rdioGroupNacinResavanja"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/txtNacinResavanjaLabel"
+        app:layout_constraintStart_toEndOf="@id/txtNacinResavanjaLabel"
+        app:layout_constraintTop_toTopOf="@id/txtNacinResavanjaLabel">
+
+
+        <RadioButton
+            android:id="@+id/radioTelefon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/t" />
+        <RadioButton
+            android:id="@+id/radioDonosenje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/s" />
+
+        <RadioButton
+            android:id="@+id/radioRemote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/r" />
+
+        <RadioButton
+            android:id="@+id/radioTeren"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/i" />
+    </RadioGroup>
+
+    <ImageButton
+        android:id="@+id/imgEdit"
+        android:backgroundTint="@color/PopBoja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/icon_edit"
+        app:layout_constraintTop_toTopOf="@id/txtNacinResavanja"
+        app:layout_constraintBottom_toBottomOf="@id/txtNacinResavanja"
+        app:layout_constraintStart_toEndOf="@id/txtNacinResavanja"/>
+
+</android.support.constraint.ConstraintLayout>
