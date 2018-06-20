@@ -1,7 +1,7 @@
 package com.example.app.itservicev2.KlijentPaket;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +15,7 @@ import com.example.app.itservicev2.R;
 
 public class KlijentProblemPopActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView txtNaziv,txtStatus,txtOpis,txtServiser,txtNacinResavanja,txtObavestenje,txtNacinResavanjaLabel,txtServiserLabel,txtObavestenjeLabel;
+    private TextView txtNaziv,txtStatus,txtOpis,txtServiser,txtNacinResavanja,txtObavestenje,txtNacinResavanjaLabel,txtServiserLabel,txtObavestenjeLabel,txtOceniLabel;
 
     private Button btnZvezda;
     private Problem problem;
@@ -25,7 +25,7 @@ public class KlijentProblemPopActivity extends BaseActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_klijent_problem_pop);
+        setContentView(R.layout.popup_klijent_problem);
         inicijalizujKomponente();
 
     }
@@ -43,6 +43,7 @@ public class KlijentProblemPopActivity extends BaseActivity implements View.OnCl
         txtServiser=(TextView)findViewById(R.id.txtServiser) ;
         txtStatus=(TextView)findViewById(R.id.txtStatus) ;
         txtNacinResavanjaLabel=(TextView)findViewById(R.id.txtNacinResavanjaLabel) ;
+        txtOceniLabel=(TextView)findViewById(R.id.txtOceniLabel);
 
         btnZvezda=(Button) findViewById(R.id.btnZvezda);
         btnZvezda.setOnClickListener(this);
@@ -59,14 +60,29 @@ public class KlijentProblemPopActivity extends BaseActivity implements View.OnCl
             txtObavestenjeLabel.setVisibility(View.GONE);
             txtObavestenje.setVisibility(View.GONE);
             txtNacinResavanjaLabel.setVisibility(View.GONE);
-            procHeight=0.3;
+            btnZvezda.setVisibility(View.GONE);
+            procHeight=0.4;
             problemUKomponente();
 
         }
         else {
-            procHeight =0.6;
+            procHeight =0.75;
            bazaPristup.ucitajServisera(problem.getIdServisera());
         }
+        if(problem.getStatus().equals("Resen")) {
+            btnZvezda.setVisibility(View.VISIBLE);
+            txtOceniLabel.setVisibility(View.VISIBLE);
+        }
+        else {
+            btnZvezda.setVisibility(View.INVISIBLE);
+            txtOceniLabel.setVisibility(View.INVISIBLE);
+        }
+        if(problem.isStar()) {
+            txtOceniLabel.setText("Zvezdica dodeljna");
+            btnZvezda.setBackground(getDrawable(R.drawable.icon_star_active));
+            btnZvezda.setClickable(false);
+        }
+
 
         DisplayMetrics dm=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -94,10 +110,12 @@ public class KlijentProblemPopActivity extends BaseActivity implements View.OnCl
 
         this.serviser=serviser;
         txtServiser.setText(serviser.getIme()+" "+serviser.getPrezime());
-        txtNacinResavanja.setText(problem.getNacinResavanja());
+        String nacinResavanja=splitujString(problem.getNacinResavanja());
+        txtNacinResavanja.setText(nacinResavanja);
         txtObavestenje.setText(problem.getObavestenje());
         txtNaziv.setText(problem.getNaziv());
         txtOpis.setText(problem.getOpis());
+        txtOpis.setMovementMethod(new ScrollingMovementMethod());
         txtStatus.setText(problem.getStatus());
 
     }
@@ -107,9 +125,13 @@ public class KlijentProblemPopActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         if(v.getId()==R.id.btnZvezda)
         {
+            if(!isNetworkAvailable())
+                return;
             serviser.setStarsCount(serviser.getStarsCount()+1);
-            bazaPristup.registrujStar(serviser);
-           // btnZvezda.setBackground(getDrawable());
+            problem.setStar(true);
+            txtOceniLabel.setText("Zvezdica dodeljna");
+            bazaPristup.registrujStar(serviser,problem);
+             btnZvezda.setBackground(getDrawable(R.drawable.icon_star_active));
             btnZvezda.setClickable(false);
         }
     }

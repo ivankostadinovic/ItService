@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/navigation_profil"
-        android:icon="@drawable/ic_profil_slika"
+        android:icon="@drawable/korisnik_profil_icon"
         android:title="Profil"/>
 
     <item
         android:id="@+id/navigation_neprihvaceni_problemi"
-        android:icon="@drawable/serviser_prijavljeni_problemi_icon_v2"
+        android:icon="@drawable/serviser_prijavljeni_problemi_icon"
         android:title="Prijavljeni problemi"/>
 
     <item

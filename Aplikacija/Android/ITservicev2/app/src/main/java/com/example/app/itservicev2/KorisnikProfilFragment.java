@@ -9,11 +9,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Klase.Klijent;
 import com.example.app.itservicev2.Klase.Korisnik;
 import com.example.app.itservicev2.Klase.Serviser;
+import com.example.app.itservicev2.KlijentPaket.KlijentActivity;
+import com.example.app.itservicev2.ServiserPaket.ServiserActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -23,7 +28,7 @@ public class KorisnikProfilFragment extends Fragment implements View.OnClickList
 
     private Korisnik korisnik;
     private EditText editIme,editPrezime,editEmail,editTelefon,editNazivFirme;
-    private TextView txtFirmaJmbg, txtImeKorisnika, txtPrezimeKorisnika, txtEmailKorisnika, txtTelefonKorisnika, txtFirmaJmbgKorisnika;
+    private TextView txtFirmaJmbg, txtImeKorisnika, txtPrezimeKorisnika, txtEmailKorisnika, txtTelefonKorisnika, txtFirmaJmbgKorisnika,txtVerifikacija;
     private Button btnChangePass,btnChangeEmail,btnSaveChanges,btnEdit,btnCancel;
     private BazaPristup bazaPristup;
     private boolean isServiser;
@@ -86,6 +91,7 @@ public class KorisnikProfilFragment extends Fragment implements View.OnClickList
 
         switch(v.getId())
         {
+
             case R.id.btnChangeEmail:
                 Intent i=new Intent(getActivity(),ChangeEmailActivity.class);
                 i.putExtra("Pass", korisnik.getPassword());
@@ -106,10 +112,19 @@ public class KorisnikProfilFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.btnCancel:
                 enableEdit(false);
+            case R.id.txtVerifikacija:
+                verifikacijaOnCLick();
+
 
         }
 
     }
+
+    public void verifikacijaOnCLick()
+    {
+        bazaPristup.posaljiEmailZaVerifikaciju();
+    }
+
 
 
     public void enableEdit(boolean flag)
@@ -188,6 +203,17 @@ public class KorisnikProfilFragment extends Fragment implements View.OnClickList
 
    public void saveChangesOnClick()
     {
+        if(isServiser)
+        {
+            if (!((ServiserActivity) (getActivity())).isNetworkAvailable())
+                return;
+        }
+        else
+        {
+            if (!((KlijentActivity) (getActivity())).isNetworkAvailable())
+                return;
+        }
+
         if(!praznoProvera(new EditText[]{editTelefon,editPrezime,editIme}))
             return;
         komponenteUKorisnika();
@@ -207,13 +233,20 @@ public class KorisnikProfilFragment extends Fragment implements View.OnClickList
 
         txtFirmaJmbg =(TextView) view.findViewById(R.id.txtFirmaJmbg);
         if(isServiser)
-            txtFirmaJmbg.setText("JMBG:");
+            txtFirmaJmbg.setText(R.string.jmbg);
 
         txtEmailKorisnika =(TextView) view.findViewById(R.id.EmailKorisnika);
         txtImeKorisnika =(TextView) view.findViewById(R.id.ImeKorisnika);
         txtPrezimeKorisnika =(TextView) view.findViewById(R.id.PrezimeKorisnika);
         txtTelefonKorisnika =(TextView) view.findViewById(R.id.TelefonKorisnika);
         txtFirmaJmbgKorisnika =(TextView)view.findViewById(R.id.FirmaJmbgKorisnika);
+        txtVerifikacija=(TextView)view.findViewById(R.id.txtVerifikacija);
+
+        txtVerifikacija.setOnClickListener(this);
+
+       FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+       if(!user.isEmailVerified())
+           txtVerifikacija.setVisibility(View.VISIBLE);
 
         btnChangeEmail = (Button) view.findViewById(R.id.btnChangeEmail);
         btnChangeEmail.setOnClickListener(this);

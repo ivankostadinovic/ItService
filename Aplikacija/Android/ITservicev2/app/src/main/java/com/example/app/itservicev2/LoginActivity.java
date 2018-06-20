@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Custom.BaseActivity;
@@ -66,10 +67,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         switch (v.getId())
         {
             case R.id.btnLogin:
-                if(!praznoProvera(new EditText[]{editEmail,editPass}))
-                    return;
-                showProgress();
-                bazaPristup.proveriLogin(editEmail.getText().toString(),editPass.getText().toString());
+                loginOnClick();
                 break;
             case R.id.txtCreateAccount:
                 startActivity(new Intent(this,CreateAccountActivity.class));
@@ -78,6 +76,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     startActivity(new Intent(this,ForgotPasswordActivity.class));
                 break;
         }
+    }
+
+    public void loginOnClick()
+    {
+        if(!praznoProvera(new EditText[]{editEmail,editPass}))
+            return;
+        showProgress();
+        bazaPristup.proveriLogin(editEmail.getText().toString(),editPass.getText().toString());
     }
 
     public  void pokreniKlijentActivity(Klijent klijent)

@@ -16,7 +16,7 @@
 
             <EditText
                 android:id="@+id/editEmailCreate"
-                style="@style/NasEditText"
+                style="@style/CustomEditText"
                 android:ems="10"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
@@ -29,7 +29,7 @@
 
             <EditText
                 android:id="@+id/editPassword"
-                style="@style/NasEditText"
+                style="@style/CustomEditText"
                 android:hint="@string/sifra"
                 android:inputType="textPassword"
                 app:layout_constraintStart_toStartOf="@+id/editEmailCreate"
@@ -37,7 +37,7 @@
 
             <EditText
                 android:id="@+id/editConfirmPassword"
-                style="@style/NasEditText"
+                style="@style/CustomEditText"
                 android:hint="@string/potvrdite_sifru"
                 android:inputType="textPassword"
                 app:layout_constraintStart_toStartOf="@+id/editPassword"
@@ -45,7 +45,7 @@
 
             <EditText
                 android:id="@+id/editIme"
-                style="@style/NasEditText"
+                style="@style/CustomEditText"
                 android:hint="@string/ime"
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="@+id/editConfirmPassword"
@@ -53,7 +53,7 @@
 
             <EditText
                 android:id="@+id/editPrezime"
-                style="@style/NasEditText"
+                style="@style/CustomEditText"
                 android:hint="@string/prezime"
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="@+id/editIme"
@@ -61,7 +61,7 @@
 
             <EditText
                 android:id="@+id/editTelefon"
-                style="@style/NasEditText"
+                style="@style/CustomEditText"
                 android:hint="@string/telefon"
                 android:inputType="phone"
                 app:layout_constraintStart_toStartOf="@+id/editPrezime"
@@ -69,7 +69,7 @@
 
             <EditText
                 android:id="@+id/editFirma"
-                style="@style/NasEditText"
+                style="@style/CustomEditText"
                 android:layout_marginTop="10dp"
                 android:visibility="invisible"
                 android:hint="@string/naziv_firme"
@@ -89,7 +89,7 @@
 
             <Button
                 android:id="@+id/btnCreateAccount"
-                style="@style/EntryButton"
+                style="@style/CustomFilledButton"
                 android:layout_marginTop="16dp"
                 android:text="@string/registruj_se"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -7,8 +7,8 @@ public class Klijent extends Korisnik {
     public Klijent()
     {
     }
-    public  Klijent(String i,String p,String e,String pass,String tel,String firma){
-      super(i,p,e,pass,tel);
+    public  Klijent(String i,String p,String e,String pass,String tel,String firma,int BrojP){
+      super(i,p,e,pass,tel,BrojP);
         nazivFirme=firma;
     }
 

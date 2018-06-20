@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Custom.BaseActivity;
@@ -44,14 +45,20 @@ public class CreateAccountActivity extends BaseActivity {
         btnRegistruj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!validacija())
-                    return;
-                Klijent k = new Klijent(editIme.getText().toString(), editPrezime.getText().toString(), editEmail.getText().toString(),
-                        editPass.getText().toString(), editTelefon.getText().toString(), editNazivFirme.getText().toString());
-                bazaPristup.upisiKlijenta(k);
+               registrujOnClick();
             }
         });
 
+
+    }
+    public void registrujOnClick()
+    {
+
+        if(!validacija())
+            return;
+        Klijent k = new Klijent(editIme.getText().toString(), editPrezime.getText().toString(), editEmail.getText().toString(),
+                editPass.getText().toString(), editTelefon.getText().toString(), editNazivFirme.getText().toString(),0);
+        bazaPristup.upisiKlijenta(k);
 
     }
 

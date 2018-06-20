@@ -192,7 +192,7 @@
         app:layout_constraintBottom_toBottomOf="@id/txtKlijentLabel"
 
 
-        app:layout_constraintStart_toEndOf="@id/txtNacinResavanjaLabel"
+        app:layout_constraintStart_toEndOf="@id/txtDatumZavrsavanjaLabel"
         app:layout_constraintTop_toTopOf="@id/txtKlijentLabel" />
 
     <TextView
@@ -207,7 +207,7 @@
 
         app:layout_constraintBottom_toBottomOf="@id/txtNacinResavanjaLabel"
 
-        app:layout_constraintStart_toEndOf="@id/txtNacinResavanjaLabel"
+        app:layout_constraintStart_toEndOf="@id/txtDatumZavrsavanjaLabel"
         app:layout_constraintTop_toTopOf="@id/txtNacinResavanjaLabel" />
 
     <TextView
@@ -223,7 +223,7 @@
 
     <Button
         android:id="@+id/btnStartProblem"
-        style="@style/EntryButton"
+        style="@style/CustomFilledButton"
         android:text="@string/startuj_problem"
 
 
@@ -234,7 +234,7 @@
 
     <Button
         android:id="@+id/btnSacuvajPromene"
-        style="@style/EntryButton"
+        style="@style/CustomFilledButton"
         android:text="@string/sacuvaj_promene"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/btnStartProblem"
@@ -242,19 +242,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/btnStartProblem" />
     <Button
-        style="@style/btnCancelPop"
+        style="@style/CustomButtonCancelPop"
         android:id="@+id/btnOdustani"
         android:text="@string/odustani"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnCancel"
+        android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="1"
         />
 
     <Button
         android:id="@+id/btnFinishProblem"
-        style="@style/CustomButton"
+        style="@style/CustomTextButton"
         android:text="@string/zavrsi_problem"
         android:visibility="invisible"
         android:layout_marginTop="12dp"
@@ -263,7 +262,7 @@
         app:layout_constraintTop_toBottomOf="@id/btnStartProblem" />
 
     <Button
-        style="@style/btnCancelPop"
+        style="@style/CustomButtonCancelPop"
         android:id="@+id/btnCancel"
         android:text="@string/otkazi"
         android:visibility="invisible"

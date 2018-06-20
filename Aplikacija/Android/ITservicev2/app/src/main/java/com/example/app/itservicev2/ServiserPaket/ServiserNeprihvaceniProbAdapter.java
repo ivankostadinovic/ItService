@@ -1,7 +1,6 @@
 package com.example.app.itservicev2.ServiserPaket;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Klase.Problem;
 import com.example.app.itservicev2.Klase.Serviser;
-import com.example.app.itservicev2.KlijentPaket.KlijentProblemPopActivity;
 import com.example.app.itservicev2.R;
 
 import java.util.List;
@@ -37,7 +34,7 @@ public class ServiserNeprihvaceniProbAdapter extends RecyclerView.Adapter<Servis
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.serviser_neprihvaceni_problem_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_serviser_neprihvaceni_problem,parent,false);
 
         return new ViewHolder(view);
 
@@ -51,6 +48,7 @@ public class ServiserNeprihvaceniProbAdapter extends RecyclerView.Adapter<Servis
         holder.txtTipProblema.setText(problem.getTipProblema());
         holder.txtNaziv.setText(problem.getNaziv());
         holder.txtDatum.setText(problem.getDatumPrijavljivanja());
+        holder.txtVrstaOpreme.setText(problem.getVrstaOpreme());
 
 
 
@@ -64,17 +62,19 @@ public class ServiserNeprihvaceniProbAdapter extends RecyclerView.Adapter<Servis
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView txtNaziv,txtDatum,txtTipProblema;
+        public TextView txtNaziv,txtDatum,txtTipProblema,txtVrstaOpreme;
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             txtTipProblema=(TextView)itemView.findViewById(R.id.txtTipProblema);
             txtNaziv=(TextView)itemView.findViewById(R.id.txtNazivProblema);
-            txtDatum=(TextView) itemView.findViewById(R.id.txtDatumPrijavljivanja);
+            txtDatum=(TextView) itemView.findViewById(R.id.txtDatumStartovanja);
+            txtVrstaOpreme=(TextView) itemView.findViewById(R.id.txtVrstaOpreme);
+
         }
 
         @Override
-        public void onClick(View v) {// postoji opcija da se posalju problem i serviser bazi i da baza startuje pop activity
+        public void onClick(View v) {
 
             int position=getAdapterPosition();
             Problem p=listaProblema.get(position);
@@ -82,7 +82,7 @@ public class ServiserNeprihvaceniProbAdapter extends RecyclerView.Adapter<Servis
             i.putExtra("Serviser",serviser);
             i.putExtra("Problem",p);
 
-            activity.startActivityForResult(i,1);
+            activity.startActivity(i);
 
         }
     }

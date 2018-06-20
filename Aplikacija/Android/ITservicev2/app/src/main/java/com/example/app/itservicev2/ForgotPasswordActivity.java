@@ -19,20 +19,27 @@ public class ForgotPasswordActivity extends BaseActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgot_password);
+        setContentView(R.layout.popup_forgot_password);
 
         inicijalizujKomponente();
 
         btnPoslji.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!validacijaEmaila(editEmail))
-                    return;
-                bazaPristup.posaljiEmailZaPromenu(editEmail.getText().toString());
+                posaljiOnClick();
+
             }
         });
 
 
+    }
+    public void posaljiOnClick()
+    {
+        if (!isNetworkAvailable())
+            return;
+        if(!validacijaEmaila(editEmail))
+            return;
+        bazaPristup.posaljiEmailZaPromenu(editEmail.getText().toString());
     }
 
     @Override
@@ -43,7 +50,7 @@ public class ForgotPasswordActivity extends BaseActivity {
         int width=dm.widthPixels;
         int height=dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8),(int)(height*.5)) ;
+        getWindow().setLayout((int)(width*.8),(int)(height*.3)) ;
 
 
         bazaPristup=new BazaPristup(this);

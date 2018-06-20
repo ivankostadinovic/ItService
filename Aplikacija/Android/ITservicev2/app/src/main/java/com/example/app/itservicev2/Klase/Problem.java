@@ -16,9 +16,41 @@ public class Problem implements Serializable {
     private String idServisera;
     private String adresa;
     private String obavestenje;
-    private String startProblema;
+    private String datumStartovanja;
+    private String vrstaOpreme;
+    private boolean isStar;
+
+    public void setStar(boolean star) {
+        isStar = star;
+    }
+
+    public boolean isStar() {
+
+        return isStar;
+    }
+
+    public void setDatumPrihvatanja(String datumPrihvatanja) {
+        this.datumPrihvatanja = datumPrihvatanja;
+    }
+
+    private String datumPrihvatanja;
+
+    public String getDatumPrihvatanja() {
+        return datumPrihvatanja;
+    }
 
 
+
+
+
+    public void setVrstaOpreme(String vrstaOpreme) {
+        this.vrstaOpreme = vrstaOpreme;
+    }
+
+    public String getVrstaOpreme() {
+
+        return vrstaOpreme;
+    }
 
     public String getObavestenje() {
         return obavestenje;
@@ -35,13 +67,13 @@ public class Problem implements Serializable {
 
     }
 
-    public void setStartProblema(String startProblema) {
-        this.startProblema = startProblema;
+    public void setDatumStartovanja(String datumStartovanja) {
+        this.datumStartovanja = datumStartovanja;
     }
 
-    public String getStartProblema() {
+    public String getDatumStartovanja() {
 
-        return startProblema;
+        return datumStartovanja;
     }
 
     @Override

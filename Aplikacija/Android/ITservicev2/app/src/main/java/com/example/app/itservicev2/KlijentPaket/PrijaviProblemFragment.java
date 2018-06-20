@@ -6,17 +6,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Klase.Klijent;
 import com.example.app.itservicev2.Klase.Problem;
 import com.example.app.itservicev2.R;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class PrijaviProblemFragment extends Fragment implements View.OnClickList
     private EditText editNaziv,editAdresa,editOpis;
 
     private RadioButton radioSoftverski,radioHardverski;
+    private Spinner spinVrstaOpreme;
 
 
     private Button btnPrijaviProblem;
@@ -60,6 +62,7 @@ public class PrijaviProblemFragment extends Fragment implements View.OnClickList
             super.onCreate(savedInstanceState);
             if (getArguments() != null) {
                 klijent = (Klijent)getArguments().getSerializable("Klijent");
+                problem=new Problem();
             }
 
     }
@@ -67,19 +70,41 @@ public class PrijaviProblemFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view =inflater.inflate(R.layout.fragment_prijavi_problem, container, false);
+        View view =inflater.inflate(R.layout.fragment_klijent_prijavi_problem, container, false);
 
         editNaziv=(EditText)view.findViewById(R.id.editNazivProblema);
         editAdresa=(EditText)view.findViewById(R.id.editAdresa);
         editOpis=(EditText) view.findViewById(R.id.editOpis);
+        spinVrstaOpreme=(Spinner)view.findViewById(R.id.vrstaOpreme);
 
         radioHardverski=(RadioButton)view.findViewById(R.id.radioHardverski);
         radioSoftverski=(RadioButton)view.findViewById(R.id.radioSoftverski);
+
+        String[] items={"Telefon","Laptop","Desktop","Stampac","Tablet"};
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),R.array.Stringovi,R.layout.item_spinner);
+        adapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
+        spinVrstaOpreme.setAdapter(adapter);
+        spinVrstaOpreme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                problem.setVrstaOpreme((String)parent.getItemAtPosition(position));
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+
 
         btnPrijaviProblem=(Button)view.findViewById(R.id.btnPrijaviProblem);
         btnPrijaviProblem.setOnClickListener(this);
 
         bazaPristup=new BazaPristup(getActivity());
+
         return view;
 
     }
@@ -119,7 +144,7 @@ public class PrijaviProblemFragment extends Fragment implements View.OnClickList
 
     public void ucitajProblem()
     {
-        problem=new Problem();
+
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm");
         String datum = df.format(c);
@@ -135,16 +160,21 @@ public class PrijaviProblemFragment extends Fragment implements View.OnClickList
 
         problem.setStatus("Neprihvacen");
         problem.setIdKlijenta(klijent.getId());
+        klijent.setBrojProblema(klijent.getBrojProblema()+1);
+        if(problem.getVrstaOpreme()==null)
+            problem.setVrstaOpreme("Telefon");
 
     }
 
     public void prijaviProblem()
     {
+
         if(!praznoProvera())
             return;
         ucitajProblem();
-        bazaPristup.upisiProblem(problem);
-        ((KlijentActivity)getActivity()).pregledProblemaFragment.dodajProblem(problem);
+        boolean flag=bazaPristup.upisiProblem(problem,klijent);
+
+        if(flag)
         clearPolja();
 
 

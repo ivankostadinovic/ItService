@@ -25,7 +25,7 @@
 
         <EditText
             android:id="@+id/editEmail"
-            style="@style/NasEditText"
+            style="@style/CustomEditText"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:layout_marginTop="0dp"
@@ -37,7 +37,7 @@
 
         <EditText
             android:id="@+id/editPass"
-            style="@style/NasEditText"
+            style="@style/CustomEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/sifra"
@@ -70,7 +70,7 @@
         <Button
             android:id="@+id/btnLogin"
 
-            style="@style/EntryButton"
+            style="@style/CustomFilledButton"
             android:fontFamily="sans-serif"
             android:text="@string/uloguj_se"
             app:layout_constraintBottom_toBottomOf="parent"

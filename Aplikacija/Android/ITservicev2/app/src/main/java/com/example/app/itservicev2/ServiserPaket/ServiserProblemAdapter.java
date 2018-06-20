@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.app.itservicev2.Klase.Problem;
-import com.example.app.itservicev2.KlijentPaket.KlijentProblemPopActivity;
 import com.example.app.itservicev2.R;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class ServiserProblemAdapter extends RecyclerView.Adapter<ServiserProblem
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.serviser_problem_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_serviser_problem,parent,false);
 
         return new ViewHolder(view);
 
@@ -66,7 +65,7 @@ public class ServiserProblemAdapter extends RecyclerView.Adapter<ServiserProblem
             itemView.setOnClickListener(this);
             txtTipProblema=(TextView)itemView.findViewById(R.id.txtTipProblema);
             txtNaziv=(TextView)itemView.findViewById(R.id.txtNazivProblema);
-            txtDatum=(TextView) itemView.findViewById(R.id.txtDatumPrijavljivanja);
+            txtDatum=(TextView) itemView.findViewById(R.id.txtDatumStartovanja);
             txtStatus=(TextView)itemView.findViewById(R.id.txtStatusProblema);
         }
 
@@ -75,7 +74,6 @@ public class ServiserProblemAdapter extends RecyclerView.Adapter<ServiserProblem
 
             int position=getAdapterPosition();
             Problem p=listaProblema.get(position);
-
             Intent i=new Intent(context, ServiserProblemPopActivity.class);
             i.putExtra("Problem",p);
             context.startActivity(i);

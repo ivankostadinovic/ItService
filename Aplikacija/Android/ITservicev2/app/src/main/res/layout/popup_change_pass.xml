@@ -9,7 +9,7 @@
     android:background="@drawable/popup">
     <Button
         android:id="@+id/btnSubmitChangePass"
-        style="@style/EntryButton"
+        style="@style/CustomFilledButton"
         android:layout_marginTop="20dp"
         android:text="@string/PromeniSifru"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +19,7 @@
     <EditText
 
         android:id="@+id/editOldPass"
-        style="@style/NasEditText"
+        style="@style/CustomEditText"
         android:hint="@string/stara_Sifra"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +31,7 @@
 
     <EditText
         android:id="@+id/editNewPass"
-        style="@style/NasEditText"
+        style="@style/CustomEditText"
         android:hint="@string/nova_Sifra"
         android:inputType="textPassword"
         app:layout_constraintTop_toBottomOf="@id/editOldPass"
@@ -40,7 +40,7 @@
 
     <EditText
         android:id="@+id/editChangeConfirmPass"
-        style="@style/NasEditText"
+        style="@style/CustomEditText"
         android:layout_marginTop="20dp"
         android:hint="@string/potvrdi_Sifru"
         android:inputType="textPassword"

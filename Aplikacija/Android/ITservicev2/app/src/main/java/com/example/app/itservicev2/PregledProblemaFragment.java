@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Custom.BaseActivity;
@@ -21,6 +22,8 @@ import com.example.app.itservicev2.ServiserPaket.ServiserProblemAdapter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -34,7 +37,7 @@ public class PregledProblemaFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private Korisnik korisnik;
     private boolean isServiser;
-    private ProgressDialog progressDialog;
+
 
     public BazaPristup bazaPristup;
 
@@ -42,22 +45,7 @@ public class PregledProblemaFragment extends Fragment {
     public PregledProblemaFragment() {
 
     }
-    public void showProgress()
-    {
-        if(progressDialog==null)
-        {
-            progressDialog=new ProgressDialog(getContext());
-            progressDialog.setCancelable(false);
-            progressDialog.setMessage("Ucitavanje");
 
-        }
-        progressDialog.show();
-    }
-    public void hideProgress()
-    {
-        if(progressDialog!=null&&progressDialog.isShowing())
-            progressDialog.dismiss();
-    }
 
 
 
@@ -118,10 +106,10 @@ public class PregledProblemaFragment extends Fragment {
                         if(isServiser)
                         {
                             ((ServiserActivity)getActivity()).otvoriFragment(((ServiserActivity)getActivity()).pregledNeprihvacenihProbFragment,false);
-                            ((ServiserActivity)getActivity()).navigation.setSelectedItemId(R.id.navigation_neprihvaceni_problemi);//ovo treba da se promeni
+                            ((ServiserActivity)getActivity()).navigation.setSelectedItemId(R.id.navigation_neprihvaceni_problemi);
                         }
                         else {
-                            ((KlijentActivity) getActivity()).otvoriFragment(((KlijentActivity) getActivity()).prijaviProblemFragment,false);
+                            ((KlijentActivity) getActivity()).otvoriFragment(((KlijentActivity) getActivity()).prijaviProblemFragment,true);
                             ((KlijentActivity) getActivity()).navigation.setSelectedItemId(R.id.navigation_prijavi_problem);
                         }
                     }
@@ -131,13 +119,13 @@ public class PregledProblemaFragment extends Fragment {
                     }
                 }));
 
-        if(listaProblema==null) {// za prvo ucitavanje liste problema
-            bazaPristup.ucitajProbleme(korisnik.getId(), isServiser);
-
+        if(listaProblema==null) {    // za prvo ucitavanje liste problema
             if(isServiser)
                 bazaPristup.postaviServiserProblemListener(korisnik.getId());
-            else
+              else
                 bazaPristup.postaviKlijentProblemListener(korisnik.getId());
+
+            bazaPristup.ucitajProbleme(korisnik.getId(), isServiser);
         }
         else
             loadProbleme(listaProblema);
@@ -157,10 +145,12 @@ public class PregledProblemaFragment extends Fragment {
 
     public void ucitajProblemPromenu(Problem problem)
     {
+
         if(listaProblema!=null) {
           for(int i=0;i<listaProblema.size();i++)
-              if(listaProblema.get(i).getProblemId().equals(problem.getProblemId()))
-                  listaProblema.set(i,problem);
+              if(listaProblema.get(i).getProblemId().equals(problem.getProblemId())) {
+                  listaProblema.set(i, problem);
+              }
             loadProbleme(listaProblema);
         }
     }
@@ -169,6 +159,17 @@ public class PregledProblemaFragment extends Fragment {
     {
 
         listaProblema=listaP;
+        Comparator<Problem> c=new Comparator<Problem>() {
+            @Override
+            public int compare(Problem o1, Problem o2) {
+                if(o1.getStatus().compareTo("Naplacen")==0)
+                    return 1;
+                if(o2.getStatus().compareTo("Naplacen")==0)
+                    return -1;
+                return(o1.getStatus().compareTo(o2.getStatus()));
+            }
+        };
+        Collections.sort(listaProblema,c);
 
         if(isServiser)
         {
@@ -186,6 +187,16 @@ public class PregledProblemaFragment extends Fragment {
     }
 
 
+    public void obrisiProblem(Problem p) {
 
 
+            for(int i=0;i<listaProblema.size();i++)
+                if(listaProblema.get(i).getProblemId().equals(p.getProblemId())) {
+                    listaProblema.remove(i);
+                }
+            loadProbleme(listaProblema);
+
+
+
+    }
 }

@@ -11,7 +11,16 @@ public class Korisnik implements Serializable {
     private String prezime;
     private String email;
     private String password;
+    private int brojProblema;
 
+    public void setBrojProblema(int brojProblema) {
+        this.brojProblema = brojProblema;
+    }
+
+    public int getBrojProblema() {
+
+        return brojProblema;
+    }
 
     private String brojtelefona;
 
@@ -25,14 +34,15 @@ public class Korisnik implements Serializable {
     }
 
     public  Korisnik(){}
-    public Korisnik(String i,String p,String e,String pass,String tel)
+    public Korisnik(String iime,String prezime,String email,String pass,String tel,int BrojP)
     {
 
-        email=e;
-        password=pass;
-        brojtelefona=tel;
-        ime=i;
-        prezime=p;
+        this.email=email;
+       this.password=pass;
+        this.brojtelefona=tel;
+       this. ime=ime;
+        this.prezime=prezime;
+        this.brojProblema=BrojP;
 
     }
 

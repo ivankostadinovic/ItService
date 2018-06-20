@@ -23,7 +23,7 @@ public class ChangeEmailActivity extends BaseActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_email);
+        setContentView(R.layout.popup_change_email);
 
         inicijalizujKomponente();
 
@@ -39,18 +39,15 @@ public class ChangeEmailActivity extends BaseActivity {
 
     public void promeniEmailOnClick()
     {
-        if(!potvrdaPass())
-        {
-            Toast.makeText(ChangeEmailActivity.this, "Pogresana Šifra", Toast.LENGTH_LONG).show();
+        if (!isNetworkAvailable())
             return;
-        }
+
         if(!validacijaEmaila(editChangeEmail))
             return;
-        bazaPristup.promeniEmail(editChangeEmail.getText().toString(),isServiser);
-        Intent i=new Intent();
-        i.putExtra("NoviEmail",editChangeEmail.getText().toString());
-        setResult(RESULT_OK,i);
-        finish();
+
+        bazaPristup.autentifikacija(editPassEmail.getText().toString(),null,isServiser,true,editChangeEmail.getText().toString());
+
+
 
     }
 
@@ -70,7 +67,7 @@ public class ChangeEmailActivity extends BaseActivity {
 
         int width=dm.widthPixels;
         int height=dm.heightPixels;
-        getWindow().setLayout((int)(width*.8),(int)(height*.5));
+        getWindow().setLayout((int)(width*.8),(int)(height*.4));
 
         bazaPristup=new BazaPristup(this);
 
@@ -82,6 +79,14 @@ public class ChangeEmailActivity extends BaseActivity {
         editChangeEmail=(EditText) findViewById(R.id.editChangeEmail);
 
         btnChangeEmail=(Button) findViewById(R.id.btnSubmitChangeEmail);
+
+    }
+    public void zavrsiActivity()
+    {
+        Intent i=new Intent();
+        i.putExtra("NoviEmail",editChangeEmail.getText().toString());
+        setResult(RESULT_OK,i);
+        finish();
 
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bravo basse</string>
+    <string name="app_name">IT Service</string>
     <string name="ForgotPassword"><u>Zaboravili ste šifru?</u></string>
     <string name="SignUp"><u>Napravi nalog.</u></string>
     <string name="title_activity_klijent">ITservice</string>
@@ -48,7 +48,7 @@
     <string name="softverski">Softverski</string>
     <string name="status"><b>Status:</b></string>
     <string name="naziv_problemaB"><b>Naziv:</b></string>
-    <string name="datum_prijave"><b>Datum:</b></string>
+    <string name="datumDT"><b>Datum:</b></string>
     <string name="otkazi">Otkaži</string>
     <string name="tip_problema"><b>Tip:</b></string>
     <string name="klijent"><b>Klijent:</b></string>
@@ -67,10 +67,20 @@
     <string name="startuj_problem">Startuj problem</string>
     <string name="promeni_nacin_resavanja">Promeni način rešavanja</string>
     <string name="zavrsi_problem">Završi problem</string>
-    <string name="jmbg"><b>JMBG</b></string>
+    <string name="jmbg"><b>JMBG:</b></string>
     <string name="t">T</string>
     <string name="s">S</string>
     <string name="r">R</string>
     <string name="i">I</string>
+    <string name="uredjaj">Tip uredjaja:</string>
+    <string name="uredjajB"><b>Tip uredjaja:</b></string>
+    <string name="datum_startovanja"><b>Datum startovanja:</b></string>
+    <string name="datum_zavrsavanja"><b>Datum zavrsavanja:</b></string>
+    <string name="odustani">Odustani</string>
+    <string name="vrsta_uredjaja"><b>Uredjaj:</b></string>
+    <string name="verifikuj"><u>Verifikuj email.</u></string>
+    <string name="dodelite_zvezdicu_serviseru"><b>Dodelite zvezdicu serviseru:</b></string>
+    <array name="Stringovi"><item>Mobilni uređaj</item><item>Desktop</item><item>Periferija</item><item>Laptop</item><item>Televizor</item></array>
+
 
 </resources>

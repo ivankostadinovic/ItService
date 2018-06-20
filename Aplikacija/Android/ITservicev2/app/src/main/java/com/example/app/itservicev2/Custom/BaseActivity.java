@@ -1,8 +1,14 @@
 package com.example.app.itservicev2.Custom;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
+
+import com.example.app.itservicev2.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -20,7 +26,32 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         progressDialog.show();
     }
+    public String splitujString(String string)
+    {
+        String p;
+        if(string.contains(", "))
+        {
+            String rez[] = string.split(", ");
+            p = rez[rez.length - 1];
+        }
+        else
+            p=string;
+        return p;
 
+    }
+    public boolean isNetworkAvailable() {
+
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean flag=activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        if(!flag)
+
+        {
+            new AlertDialog.Builder(this, R.style.CustomAlertDialog).setTitle("Obavestenje").setMessage("Da bi aplikacija funkcionisala, obezbedite internet konekciju.").setCancelable(true).show();
+        }
+        return flag;
+    }
     public void hideProgress()
     {
         if(progressDialog!=null&&progressDialog.isShowing())
@@ -64,5 +95,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return  true;
     }
+
 
 }

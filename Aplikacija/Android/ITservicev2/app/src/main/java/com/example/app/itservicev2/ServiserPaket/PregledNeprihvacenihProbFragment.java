@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Custom.RecyclerViewOnSwipe;
@@ -20,6 +21,8 @@ import com.example.app.itservicev2.ServiserPaket.ServiserProblemAdapter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class PregledNeprihvacenihProbFragment extends Fragment {
@@ -113,6 +116,7 @@ public class PregledNeprihvacenihProbFragment extends Fragment {
                 }));
 
         if(listaProblema==null) {
+
             bazaPristup.ucitajNeprihvaceneProbleme();
             bazaPristup.postaviNeprihvaceniProblemListener();
         }
@@ -134,6 +138,13 @@ public class PregledNeprihvacenihProbFragment extends Fragment {
     {
 
         listaProblema=listaP;
+        Comparator<Problem> c=new Comparator<Problem>() {
+            @Override
+            public int compare(Problem o1, Problem o2) {
+                return o1.getDatumPrijavljivanja().compareTo(o2.getDatumPrijavljivanja());
+            }
+        };
+        Collections.sort(listaProblema,c);
         adapter=new ServiserNeprihvaceniProbAdapter(listaProblema,getActivity(),serviser);
 
         if(getActivity()!=null)

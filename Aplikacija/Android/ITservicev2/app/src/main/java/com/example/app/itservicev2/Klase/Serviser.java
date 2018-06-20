@@ -8,8 +8,8 @@ public class Serviser extends  Korisnik{
     private int starsCount;
     public Serviser(){}
 
-    public Serviser(String i,String p,String e,String pass,String tel,String jmb,String dt){
-        super(i,p,e,pass,tel);
+    public Serviser(String i,String p,String e,String pass,String tel,String jmb,String dt,int BrojP){
+        super(i,p,e,pass,tel,BrojP);
         jmbg=jmb;
         datumZaposljenja=dt;
     }

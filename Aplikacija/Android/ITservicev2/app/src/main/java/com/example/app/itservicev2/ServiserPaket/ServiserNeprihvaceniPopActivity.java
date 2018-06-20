@@ -1,17 +1,12 @@
 package com.example.app.itservicev2.ServiserPaket;
 
-import android.app.Activity;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Custom.BaseActivity;
@@ -19,6 +14,10 @@ import com.example.app.itservicev2.Klase.Klijent;
 import com.example.app.itservicev2.Klase.Problem;
 import com.example.app.itservicev2.Klase.Serviser;
 import com.example.app.itservicev2.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ServiserNeprihvaceniPopActivity extends BaseActivity implements View.OnClickListener {
 
@@ -31,7 +30,7 @@ public class ServiserNeprihvaceniPopActivity extends BaseActivity implements Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_serviser_neprihvaceni_pop);
+        setContentView(R.layout.popup_serviser_neprihvaceni);
         inicijalizujKomponente();
 
     }
@@ -45,7 +44,7 @@ public class ServiserNeprihvaceniPopActivity extends BaseActivity implements Vie
         int width=dm.widthPixels;
         int height=dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8),(int)(height*.6)) ;
+        getWindow().setLayout((int)(width*.8),(int)(height*.65)) ;
         txtKlijent=(TextView)findViewById(R.id.txtKlijent);
         txtNaziv=(TextView)findViewById(R.id.txtNaziv);
         txtOpis=(TextView)findViewById(R.id.txtOpis);
@@ -69,18 +68,26 @@ public class ServiserNeprihvaceniPopActivity extends BaseActivity implements Vie
     {
         txtKlijent.setText(klijent.getIme()+" "+klijent.getPrezime());
         txtNaziv.setText(problem.getNaziv());
-        txtOpis.setText(problem.getOpis());
+        txtOpis.setText("   "+problem.getOpis());
+        txtOpis.setMovementMethod(new ScrollingMovementMethod());
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.btnPrihvatiProblem)
         {
+            if(!isNetworkAvailable())
+                return;
             if(!radioValidacija())
                 return;
+            serviser.setBrojProblema(serviser.getBrojProblema()+1);
             problem.setIdServisera(serviser.getId());
+            Date c = Calendar.getInstance().getTime();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+            String datum = df.format(c);
+            problem.setDatumPrihvatanja(datum);
             problem.setStatus("Prihvacen");
-            bazaPristup.prihvatiProblem(problem);
+            bazaPristup.prihvatiProblem(problem,serviser);
             finish();
 
 
@@ -88,31 +95,30 @@ public class ServiserNeprihvaceniPopActivity extends BaseActivity implements Vie
 
     }
     public boolean radioValidacija() {
-        if (radioGroup.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(this, "Morate odabrati nacin resavanja problema!", Toast.LENGTH_LONG).show();
-            return false;
-        } else {
+
+
             switch (radioGroup.getCheckedRadioButtonId()) {
+                case -1:
+                    return false;
                 case R.id.radioDonosenje:
                     problem.setNacinResavanja("Donosenje u servis");
-                    problem.setObavestenje("Trebate doneti uredjaj u servis radi daljeg resavanja  Adresa je: ...");
+                    problem.setObavestenje("Trebate doneti uredjaj u servis %n radi daljeg resavanja %n Adresa je:Aleksandra medvedeva 3");
                     break;
                 case R.id.radioRemote:
                     problem.setNacinResavanja("Remote pristup");
-                    problem.setObavestenje("Problem ce se resiti remote pristupom. Serviser ce vas pozvati uskoro radi daljeg dogovora!");
+                    problem.setObavestenje("Problem ce se resiti remote pristupom. %nServiser ce vas pozvati uskoro radi daljeg dogovora!");
                     break;
                 case R.id.radioTelefon:
                     problem.setNacinResavanja("Telefonom");
-                    problem.setObavestenje("Problem ce se resiti telefonom. Serviser ce vas pozvati uskoro!");
+                    problem.setObavestenje("Problem ce se resiti telefonom. %nServiser ce vas uskoro pozvati!");
 
                     break;
                 case R.id.radioTeren:
                     problem.setNacinResavanja("Izlazak na teren");
                     problem.setObavestenje("Serviser ce uskoro doci na vasu adresu");
                     break;
-            }
-            return true;
         }
+        return true;
     }
 
 

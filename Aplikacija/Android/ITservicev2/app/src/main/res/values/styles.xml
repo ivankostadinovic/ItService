@@ -8,8 +8,8 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="EntryButton" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:background">@drawable/rounded_button</item>
+    <style name="CustomFilledButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/button_rounded_filled</item>
         <item name="android:textColor">@color/White</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:layout_height">36dp</item>
@@ -19,17 +19,22 @@
         <item name="android:layout_marginLeft">60dp</item>
     </style>
 
-    <style name="CustomButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:background">@drawable/rounded_txt_button</item>
+    <style name="CustomTextButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/button_rounded_txt</item>
         <item name="android:layout_height">36dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/NarandzastiSvetliji</item>
         <item name="android:layout_marginRight">100dp</item>
         <item name="android:layout_marginLeft">100dp</item>
+
+    </style>
+    <style name="CustomSpinner" parent="Base.Widget.AppCompat.Spinner">
+        <item name="icon">@drawable/icon_edit</item>
+        <item name="android:icon">@color/PopBoja</item>
     </style>
 
-    <style name="btnCancel" parent="Widget.AppCompat.Button.Borderless">
+    <style name="CustomButtonCancel" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/button_cancel</item>
         <item name="android:layout_height">36dp</item>
         <item name="android:layout_width">match_parent</item>
@@ -39,7 +44,7 @@
         <item name="android:layout_marginLeft">120dp</item>
     </style>
 
-    <style name="btnCancelPop" parent="Widget.AppCompat.Button.Borderless">
+    <style name="CustomButtonCancelPop" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/button_cancel</item>
         <item name="android:layout_height">36dp</item>
         <item name="android:layout_width">match_parent</item>
@@ -50,11 +55,17 @@
     </style>
 
     <style name="TextViewOpis" parent="@android:style/TextAppearance.Widget.TextView">
-        <item name="android:layout_height">73dp</item>
+        <item name="android:paddingStart">3dp</item>
+        <item name="android:paddingEnd">3dp</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:background">@drawable/popup</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:maxLines">4</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginEnd">10dp</item>
-        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginTop">5dp</item>
     </style>
     <style name="TextViewHeader" parent="@android:style/TextAppearance.Widget.TextView">
         <item name="android:textSize">17dp</item>
@@ -83,7 +94,7 @@
 
 
 
-    <style name="NasEditText" parent="Widget.AppCompat.EditText">
+    <style name="CustomEditText" parent="Widget.AppCompat.EditText">
 
         <item name="android:textColor">@color/White</item>
         <item name="android:backgroundTint">@color/Narandzasti</item>
@@ -96,10 +107,29 @@
     </style>
 
     <style name="AppTheme.CustomTheme">
+
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
 
     </style>
+    <style name="AppTheme.CustomToolbrar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionMenuTextColor">@color/Narandzasti</item>
+    </style>
 
+
+    <style name="CustomSpinnerItem" parent="android:Widget.TextView.SpinnerItem">
+        <item name="android:textSize">17dp</item>
+        <item name="android:textColor">@color/SvetloSiva</item>
+    </style>
+
+    <style name="CustomSpinnerDropDownItem" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textSize">17dp</item>
+        <item name="android:textColor">@color/SvetloSiva</item>
+    </style>
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:background">@color/PopBoja</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textColorPrimary">@color/SvetloSiva</item>
+    </style>
 
 </resources>

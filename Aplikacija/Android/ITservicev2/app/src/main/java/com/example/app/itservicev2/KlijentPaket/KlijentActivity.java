@@ -14,15 +14,12 @@ import android.view.View;
 import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Custom.BaseActivity;
 import com.example.app.itservicev2.Klase.Klijent;
-import com.example.app.itservicev2.Klase.Problem;
 import com.example.app.itservicev2.KorisnikProfilFragment;
 import com.example.app.itservicev2.LoginActivity;
 import com.example.app.itservicev2.Custom.OnSwipeTouchListener;
 import com.example.app.itservicev2.PregledProblemaFragment;
 import com.example.app.itservicev2.R;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.List;
 
 public class KlijentActivity extends BaseActivity {
 
@@ -46,7 +43,7 @@ public class KlijentActivity extends BaseActivity {
 
                     return true;
                 case R.id.navigation_pregled_problema:
-                    if(pregledProblemaFragment.listaProblema==null)
+                    if(pregledProblemaFragment.bazaPristup==null)
                         showProgress();
                     otvoriFragment(pregledProblemaFragment,true);
                     return true;
@@ -90,7 +87,6 @@ public class KlijentActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         otkaziListener();
         finish();
     }
@@ -119,11 +115,7 @@ public class KlijentActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
 
-    }
 
     @Override
     public void inicijalizujKomponente() {
@@ -145,10 +137,6 @@ public class KlijentActivity extends BaseActivity {
 
         otvoriFragment(pregledProblemaFragment,true);
         navigation.setSelectedItemId(R.id.navigation_pregled_problema);
-
-
-
-
 
 
 

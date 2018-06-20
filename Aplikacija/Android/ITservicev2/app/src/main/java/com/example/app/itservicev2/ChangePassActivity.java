@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Custom.BaseActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ChangePassActivity extends BaseActivity {
 
@@ -21,44 +22,36 @@ public class ChangePassActivity extends BaseActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_pass);
+        setContentView(R.layout.popup_change_pass);
 
         inicijalizujKomponente();
 
-        btnChangePass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                promeniPassOnClick();
-            }
-        });
+
 
     }
 
     public void promeniPassOnClick()
     {
-        if(!potvrdaPass()) {
-            Toast.makeText(ChangePassActivity.this, "Pogrešna Šifra!", Toast.LENGTH_LONG).show();
+        if (!isNetworkAvailable())
             return;
-        }
+
         if(!passProvera(editNewPass,editConfirmPass))
             return;
+        bazaPristup.autentifikacija(editOldPass.getText().toString(),editNewPass.getText().toString(),isServiser,false,null);
 
-        bazaPristup.promeniPassword(editNewPass.getText().toString(),isServiser);
 
-        Intent i=new Intent();
-        i.putExtra("NoviPass",editNewPass.getText().toString());
-        setResult(RESULT_OK,i);
+
+
+
+    }
+    public void zavrsiActivity() {
+        Intent i = new Intent();
+        i.putExtra("NoviPass", editNewPass.getText().toString());
+        setResult(RESULT_OK, i);
         finish();
-
     }
 
-    public boolean potvrdaPass()
-    {
 
-        if(!passProvera.equals(editOldPass.getText().toString()))
-            return  false;
-        return true;
-    }
 
 
     @Override
@@ -83,6 +76,12 @@ public class ChangePassActivity extends BaseActivity {
         bazaPristup=new BazaPristup(this);
 
         btnChangePass=(Button) findViewById(R.id.btnSubmitChangePass);
+        btnChangePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                promeniPassOnClick();
+            }
+        });
 
     }
 }

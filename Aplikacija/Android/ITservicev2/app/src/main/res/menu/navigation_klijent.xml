@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/navigation_profil"
-        android:icon="@drawable/ic_profil_slika"
+        android:icon="@drawable/korisnik_profil_icon"
         android:title="Profil"/>
 
     <item
@@ -14,7 +14,7 @@
 
     <item
         android:id="@+id/navigation_pregled_problema"
-        android:icon="@drawable/serviser_prijavljeni_problemi_icon_v2"
+        android:icon="@drawable/serviser_prijavljeni_problemi_icon"
         android:title="Pregled problema"/>
 
 

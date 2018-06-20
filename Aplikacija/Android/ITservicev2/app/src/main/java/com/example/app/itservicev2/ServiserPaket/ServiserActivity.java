@@ -14,15 +14,12 @@ import android.view.View;
 import com.example.app.itservicev2.Baza.BazaPristup;
 import com.example.app.itservicev2.Custom.BaseActivity;
 import com.example.app.itservicev2.Custom.OnSwipeTouchListener;
-import com.example.app.itservicev2.Klase.Problem;
 import com.example.app.itservicev2.Klase.Serviser;
 import com.example.app.itservicev2.PregledProblemaFragment;
 import com.example.app.itservicev2.KorisnikProfilFragment;
 import com.example.app.itservicev2.LoginActivity;
 import com.example.app.itservicev2.R;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.List;
 
 public class ServiserActivity extends BaseActivity {
 

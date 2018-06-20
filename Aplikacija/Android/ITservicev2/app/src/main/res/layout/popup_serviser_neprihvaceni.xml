@@ -133,7 +133,7 @@
 
     <Button
         android:id="@+id/btnPrihvatiProblem"
-        style="@style/EntryButton"
+        style="@style/CustomFilledButton"
         android:text="@string/prihvati_problem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.575"
